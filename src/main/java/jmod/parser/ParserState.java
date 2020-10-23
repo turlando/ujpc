@@ -1,23 +1,25 @@
 package jmod.parser;
 
+import java.util.List;
+
 public class ParserState {
     public final String input;
-    public final String result;
+    public final List<String> result;
     public final int    index;
 
     public ParserState(String input) {
         this(input, null, 0);
     }
 
-    public ParserState(String input, String result, int index) {
+    public ParserState(String input, List<String> result, int index) {
         this.input  = input;
         this.result = result;
         this.index  = index;
     }
 
     public boolean equals(ParserState that) {
-        return this.input == that.input
-            && this.result == that.result
+        return this.input.equals(that.input)
+            && this.result.equals(that.result)
             && this.index  == that.index;
     }
 
