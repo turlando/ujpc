@@ -3,15 +3,16 @@ package jmod.parser;
 import java.util.List;
 import java.util.LinkedList;
 
-public class SequenceP {
-    public final List<StringP> parsers;
-    public SequenceP(List<StringP> parsers) { this.parsers = parsers; }
+public class SequenceP implements Parser {
+    public final List<Parser> parsers;
+    public SequenceP(List<Parser> parsers) { this.parsers = parsers; }
 
+    @Override
     public ParserState parse(ParserState state) throws ParserException {
         List<String> results = new LinkedList<String>();
         ParserState currentState = state;
 
-        for (StringP parser : parsers) {
+        for (Parser parser : parsers) {
             currentState = parser.parse(currentState);
             results.addAll(currentState.result);
         }

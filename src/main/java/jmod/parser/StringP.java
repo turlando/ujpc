@@ -2,10 +2,11 @@ package jmod.parser;
 
 import java.util.List;
 
-public class StringP {
+public class StringP implements Parser {
     private final String target;
     public StringP(String target) { this.target = target; }
 
+    @Override
     public ParserState parse(ParserState state) throws ParserException {
         String substring = state.input.substring(state.index);
         if (substring.startsWith(target))
