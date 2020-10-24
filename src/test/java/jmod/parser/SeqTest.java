@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 
-class SequencePTest {
+class SeqTest{
     @Test void canParse() throws ParserException {
-        SequenceP parser = new SequenceP(List.of(new StringP("hello"),
-                                                 new StringP(" "),
-                                                 new StringP("world")));
+        Seq parser = new Seq(new StringP("hello"),
+                             new StringP(" "),
+                             new StringP("world"));
         ParserState initial = new ParserState("hello world");
         ParserState result = parser.parse(initial);
         ParserState expected = new ParserState("hello world",

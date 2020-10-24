@@ -3,9 +3,9 @@ package jmod.parser;
 import java.util.List;
 import java.util.LinkedList;
 
-public class SequenceP implements Parser {
+public class Seq implements Parser {
     public final List<Parser> parsers;
-    public SequenceP(List<Parser> parsers) { this.parsers = parsers; }
+    public Seq(Parser... parsers) { this.parsers = List.of(parsers); }
 
     @Override
     public ParserState parse(ParserState state) throws ParserException {

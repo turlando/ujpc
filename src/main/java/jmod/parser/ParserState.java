@@ -3,12 +3,12 @@ package jmod.parser;
 import java.util.List;
 
 public class ParserState {
-    public final String input;
+    public final String       input;
     public final List<String> result;
-    public final int    index;
+    public final int          index;
 
     public ParserState(String input) {
-        this(input, null, 0);
+        this(input, List.of(), 0);
     }
 
     public ParserState(String input, List<String> result, int index) {
