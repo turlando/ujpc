@@ -1,24 +1,39 @@
-package jmod.parser;
+package jmod.parser.string;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.List;
+import jmod.parser.State;
 
 class StrTest {
-    @Test void canParse() {
-        Str parser = new Str("test");
-        State.Success initial = State.initial("test");
-        State result = parser.parse(initial);
-        State expected = new State.Success("test", 4, List.of("test"));
-        assertTrue(result.equals(expected));
+    @Test void parseWithSuccess() {
+        Str<String> parser = new Str<>("test");
+        State.Success<StringInput, String> initial
+            = new State.Success<>(new StringInput("test"), "");
+        State<StringInput, String> result
+            = parser.parse(initial, (s, r) -> r.get());
+        State.Success<StringInput, String> expected
+            = new State.Success<>(new StringInput(""), "test");
+        assertEquals(expected, result);
     }
 
-    @Test void cantParse() {
-        Str parser = new Str("test");
-        State.Success initial = State.initial("test");
-        State result = parser.parse(initial);
-        assertTrue(result instanceof State.Success);
+    @Test void parseWithFailure() {
+        Str<String> parser = new Str<>("test");
+        State.Success<StringInput, String> initial
+            = new State.Success<>(new StringInput("nope"), "");
+        State<StringInput, String> result
+            = parser.parse(initial, (s, r) -> r.get());
+        assertEquals(result.getClass(), State.Failure.class);
+    }
+
+    @Test void parseWithTransformation() {
+        Str<String> parser = new Str<>("test");
+        State.Success<StringInput, String> initial
+            = new State.Success<>(new StringInput("test"), "");
+        State<StringInput, String> result
+            = parser.parse(initial, (s, r) -> r.get().toUpperCase());
+        State.Success<StringInput, String> expected
+            = new State.Success<>(new StringInput(""), "TEST");
+        assertEquals(expected, result);
     }
 }
