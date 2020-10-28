@@ -21,4 +21,16 @@ class TokenSequenceTest {
             = new State.Success<>("", List.of("hello", " ", "world"));
         assertEquals(expected, result);
     }
+
+    @Test void parseWithFailure() {
+        Sequence<String, String> parser
+            = new Sequence<String, String>(
+                new Token("hello"),
+                new Token(" "),
+                new Token("there"));
+        State.Success<String, List<String>> initial
+            = new State.Success<>("hello world", List.of());
+        State<String, List<String>> result = parser.parse(initial);
+        assertEquals(result.getClass(), State.Failure.class);
+    }
 }
