@@ -3,13 +3,13 @@ package jmod.parser;
 import java.util.List;
 import java.util.function.Function;
 
-public abstract class State<InputT extends Input, ResultT> {
+public abstract class State<InputT, ResultT> {
     private State() {}
 
-    public abstract <T> T match(Function<Success, T> success,
-                                Function<Failure, T> failure);
+    public abstract <T> T match(Function<Success<InputT, ResultT>, T> success,
+                                Function<Failure<InputT, ResultT>, T> failure);
 
-    public static class Success<InputT extends Input, ResultT>
+    public static class Success<InputT, ResultT>
                         extends State<InputT, ResultT> {
         public final InputT input;
         public final ResultT result;
@@ -19,8 +19,8 @@ public abstract class State<InputT extends Input, ResultT> {
             this.result = result;
         }
 
-        public <T> T match(Function<Success, T> success,
-                           Function<Failure, T> failure) {
+        public <T> T match(Function<Success<InputT, ResultT>, T> success,
+                           Function<Failure<InputT, ResultT>, T> failure) {
             return success.apply(this);
         }
 
@@ -40,7 +40,7 @@ public abstract class State<InputT extends Input, ResultT> {
         }
     }
 
-    public static class Failure<InputT extends Input, ResultT>
+    public static class Failure<InputT, ResultT>
                   extends State<InputT, ResultT> {
         public final String error;
 
@@ -48,8 +48,8 @@ public abstract class State<InputT extends Input, ResultT> {
             this.error = error;
         }
 
-        public <T> T match(Function<Success, T> success,
-                           Function<Failure, T> failure) {
+        public <T> T match(Function<Success<InputT, ResultT>, T> success,
+                           Function<Failure<InputT, ResultT>, T> failure) {
             return failure.apply(this);
         }
 
