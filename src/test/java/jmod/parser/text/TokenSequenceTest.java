@@ -33,4 +33,17 @@ class TokenSequenceTest {
         State<String, List<String>> result = parser.parse(initial);
         assertEquals(result.getClass(), State.Failure.class);
     }
+
+    @Test void parseWithTransformation() {
+        Sequence<String, Integer> parser
+            = new Sequence<String, Integer>(
+                new Token("42").map(Integer::parseInt),
+                new Token("23").map(Integer::parseInt));
+        State.Success<String, List<Integer>> initial
+            = new State.Success<>("4223", List.of());
+        State.Success<String, List<Integer>> expected
+            = new State.Success<>("", List.of(42, 23));
+        State<String, List<Integer>> result = parser.parse(initial);
+        assertEquals(expected, result);
+    }
 }

@@ -3,6 +3,7 @@ package jmod.parser.text;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import jmod.parser.Parser;
 import jmod.parser.State;
 
 class TokenTest {
@@ -10,9 +11,9 @@ class TokenTest {
         Token parser = new Token("test");
         State.Success<String, String> initial
             = new State.Success<>("test", "");
-        State<String, String> result = parser.parse(initial);
         State.Success<String, String> expected
             = new State.Success<>("", "test");
+        State<String, String> result = parser.parse(initial);
         assertEquals(expected, result);
     }
 
@@ -24,14 +25,14 @@ class TokenTest {
         assertEquals(result.getClass(), State.Failure.class);
     }
 
-    // @Test void parseWithTransformation() {
-    //     Str<String> parser = new Str<>("test");
-    //     State.Success<StringInput, String> initial
-    //         = new State.Success<>(new StringInput("test"), "");
-    //     State<StringInput, String> result
-    //         = parser.parse(initial, (s, r) -> r.get().toUpperCase());
-    //     State.Success<StringInput, String> expected
-    //         = new State.Success<>(new StringInput(""), "TEST");
-    //     assertEquals(expected, result);
-    // }
+    @Test void parseWithTransformation() {
+        Parser<String, Integer> parser
+            = new Token("42").map(Integer::parseInt);
+        State.Success<String, Integer> initial
+            = new State.Success<>("42", null);
+        State.Success<String, Integer> expected
+            = new State.Success<>("", 42);
+        State<String, Integer> result = parser.parse(initial);
+        assertEquals(expected, result);
+    }
 }
