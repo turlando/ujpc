@@ -2,11 +2,11 @@ package jmod.parser;
 
 import java.util.List;
 
-import static jmod.util.List.append;
-import static jmod.util.List.concat;
-import static jmod.util.List.first;
-import static jmod.util.List.last;
-import static jmod.util.List.rest;
+import static jmod.util.Lists.append;
+import static jmod.util.Lists.concat;
+import static jmod.util.Lists.first;
+import static jmod.util.Lists.last;
+import static jmod.util.Lists.rest;
 
 public class Sequence<InputT, ResultT>
        implements Parser<InputT, List<ResultT>> {

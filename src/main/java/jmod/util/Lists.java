@@ -3,8 +3,8 @@ package jmod.util;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
 
-public final class List {
-    private List() {}
+public final class Lists {
+    private Lists() {}
 
     public static <T> java.util.List<T> concat(java.util.List<T> l1,
                                                java.util.List<T> l2) {
