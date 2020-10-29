@@ -1,4 +1,4 @@
-package jmod.parser.text;
+package jmod.parser.combinator.text;
 
 import java.util.List;
 import java.util.regex.Pattern;

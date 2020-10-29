@@ -1,4 +1,4 @@
-package jmod.parser.text;
+package jmod.parser.combinator.text;
 
 import jmod.parser.Parser;
 import jmod.parser.State;

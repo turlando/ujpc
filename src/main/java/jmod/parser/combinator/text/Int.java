@@ -1,4 +1,4 @@
-package jmod.parser.text;
+package jmod.parser.combinator.text;
 
 import static jmod.util.Lists.first;
 import jmod.parser.Parser;

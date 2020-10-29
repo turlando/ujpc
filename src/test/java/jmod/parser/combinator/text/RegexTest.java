@@ -1,4 +1,4 @@
-package jmod.parser.text;
+package jmod.parser.combinator.text;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;

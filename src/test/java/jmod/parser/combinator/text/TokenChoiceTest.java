@@ -1,11 +1,11 @@
-package jmod.parser.text;
+package jmod.parser.combinator.text;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 import jmod.parser.State;
-import jmod.parser.Choice;
+import jmod.parser.combinator.Choice;
 
 class TokenChoiceTest {
     @Test void parseFirst() {

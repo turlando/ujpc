@@ -1,7 +1,9 @@
-package jmod.parser;
+package jmod.parser.combinator;
 
 import java.util.List;
 
+import jmod.parser.Parser;
+import jmod.parser.State;
 import static jmod.util.Lists.first;
 import static jmod.util.Lists.rest;
 

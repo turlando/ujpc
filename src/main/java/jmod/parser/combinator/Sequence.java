@@ -1,9 +1,10 @@
-package jmod.parser;
+package jmod.parser.combinator;
 
 import java.util.List;
 
+import jmod.parser.Parser;
+import jmod.parser.State;
 import static jmod.util.Lists.append;
-import static jmod.util.Lists.concat;
 import static jmod.util.Lists.first;
 import static jmod.util.Lists.last;
 import static jmod.util.Lists.rest;
@@ -12,12 +13,14 @@ public class Sequence<InputT, ResultT>
        implements Parser<InputT, List<ResultT>> {
     private final List<Parser<InputT, ResultT>> parsers;
 
-    private Sequence(List<Parser<InputT, ResultT>> parsers)
-        { this.parsers = parsers; }
+    private Sequence(List<Parser<InputT, ResultT>> parsers) {
+        this.parsers = parsers;
+    }
 
     @SafeVarargs
-    public Sequence(Parser<InputT, ResultT>... parsers)
-        { this.parsers = List.of(parsers); }
+    public Sequence(Parser<InputT, ResultT>... parsers) {
+        this.parsers = List.of(parsers);
+    }
 
     @Override
     public State<InputT, List<ResultT>>
