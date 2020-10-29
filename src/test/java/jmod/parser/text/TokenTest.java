@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import jmod.parser.State;
 
-class StrTest {
+class TokenTest {
     @Test void parseWithSuccess() {
         Token parser = new Token("test");
         State.Success<String, String> initial
