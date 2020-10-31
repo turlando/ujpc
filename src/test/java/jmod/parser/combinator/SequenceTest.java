@@ -1,13 +1,13 @@
-package jmod.parser.combinator.text;
+package jmod.parser.combinator;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 import jmod.parser.State;
-import jmod.parser.combinator.Sequence;
+import jmod.parser.combinator.text.Token;
 
-class TokenSequenceTest {
+class SequenceTest {
     @Test void parseWithSuccess() {
         Sequence<String, String> parser
             = new Sequence<String, String>(
@@ -15,7 +15,7 @@ class TokenSequenceTest {
                 new Token(" "),
                 new Token("world"));
         State.Success<String, List<String>> initial
-            = new State.Success<>("hello world", List.of());
+            = new State.Success<>("hello world", null);
         State<String, List<String>> result = parser.parse(initial);
         State.Success<String, List<String>> expected
             = new State.Success<>("", List.of("hello", " ", "world"));
@@ -29,7 +29,7 @@ class TokenSequenceTest {
                 new Token(" "),
                 new Token("there"));
         State.Success<String, List<String>> initial
-            = new State.Success<>("hello world", List.of());
+            = new State.Success<>("hello world", null);
         State<String, List<String>> result = parser.parse(initial);
         assertEquals(result.getClass(), State.Failure.class);
     }
@@ -40,7 +40,7 @@ class TokenSequenceTest {
                 new Token("42").map(Integer::parseInt),
                 new Token("23").map(Integer::parseInt));
         State.Success<String, List<Integer>> initial
-            = new State.Success<>("4223", List.of());
+            = new State.Success<>("4223", null);
         State.Success<String, List<Integer>> expected
             = new State.Success<>("", List.of(42, 23));
         State<String, List<Integer>> result = parser.parse(initial);
