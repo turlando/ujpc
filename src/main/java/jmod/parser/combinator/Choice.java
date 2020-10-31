@@ -29,6 +29,7 @@ public class Choice<InputT, ResultT>
 
         return first(parsers).parse(s)
             .match(success -> success,
-                   failure -> new Choice<InputT, ResultT>(rest(parsers)).parse(s));
+                   failure -> new Choice<InputT, ResultT>(rest(parsers))
+                                  .parse(s));
     }
 }
