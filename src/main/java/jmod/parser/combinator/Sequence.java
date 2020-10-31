@@ -31,14 +31,18 @@ public class Sequence<InputT, ResultT>
         State.Success<InputT, ResultT> state =
             new State.Success<InputT, ResultT>(
                 s.input,
-                s.result == null ? null : last(s.result));
+                s.result == null || s.result.isEmpty()
+                    ? null
+                    : last(s.result));
 
         return first(parsers).parse(state)
             .match(success -> new Sequence<InputT, ResultT>(rest(parsers))
                                   .parse(new State.Success<InputT, List<ResultT>>(
                                          success.input,
                                          success.result == null
-                                             ? s.result
+                                             ? s.result == null
+                                                 ? List.of()
+                                                 : s.result
                                              : append(s.result == null
                                                           ? List.of()
                                                           : s.result,
