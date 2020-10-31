@@ -7,13 +7,15 @@ import static jmod.util.Lists.first;
 import static jmod.util.Strings.take;
 import static jmod.util.Strings.drop;
 
+import java.util.regex.Pattern;
+
 public class Token implements Parser<String, String> {
     private String target;
     private Parser<String, String> parser;
 
     public Token(String target) {
         this.target = target;
-        this.parser = new Regex(String.format("(%s)", target))
+        this.parser = new Regex(String.format("(%s)", Pattern.quote(target)))
                           .map(result -> first(result));
     }
 
