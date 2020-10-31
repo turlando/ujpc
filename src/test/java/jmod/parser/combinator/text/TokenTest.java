@@ -29,7 +29,7 @@ class TokenTest {
         Parser<String, Integer> parser
             = new Token("42").map(Integer::parseInt);
         State.Success<String, Integer> initial
-            = new State.Success<>("42", null);
+            = new State.Success<>("42", 0);
         State.Success<String, Integer> expected
             = new State.Success<>("", 42);
         State<String, Integer> result = parser.parse(initial);

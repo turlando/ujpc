@@ -14,7 +14,7 @@ public class ChoiceTest {
                 new Token("bar"),
                 new Token("baz"));
         State.Success<String, String> initial
-            = new State.Success<>("foo test", null);
+            = new State.Success<>("foo test", "");
         State<String, String> result = parser.parse(initial);
         State.Success<String, String> expected
             = new State.Success<>(" test", "foo");
@@ -28,7 +28,7 @@ public class ChoiceTest {
                 new Token("bar"),
                 new Token("baz"));
         State.Success<String, String> initial
-            = new State.Success<>("bar test", null);
+            = new State.Success<>("bar test", "");
         State<String, String> result = parser.parse(initial);
         State.Success<String, String> expected
             = new State.Success<>(" test", "bar");
@@ -42,7 +42,7 @@ public class ChoiceTest {
                 new Token("bar"),
                 new Token("baz"));
         State.Success<String, String> initial
-            = new State.Success<>("baz test", null);
+            = new State.Success<>("baz test", "");
         State<String, String> result = parser.parse(initial);
         State.Success<String, String> expected
             = new State.Success<>(" test", "baz");
@@ -56,7 +56,7 @@ public class ChoiceTest {
                 new Token("bar"),
                 new Token("baz"));
         State.Success<String, String> initial
-            = new State.Success<>("quux test", null);
+            = new State.Success<>("quux test", "");
         State<String, String> result = parser.parse(initial);
         assertEquals(State.Failure.class, result.getClass());
     }

@@ -14,7 +14,7 @@ class TokenChoiceTest {
                 new Token("this"),
                 new Token("that"));
         State.Success<String, String> initial
-            = new State.Success<>("this that", null);
+            = new State.Success<>("this that", "");
         State<String, String> result = parser.parse(initial);
         State.Success<String, String> expected
             = new State.Success<>(" that", "this");
@@ -27,7 +27,7 @@ class TokenChoiceTest {
                 new Token("this"),
                 new Token("that"));
             State.Success<String, String> initial
-                = new State.Success<>("that this", null);
+                = new State.Success<>("that this", "");
             State<String, String> result = parser.parse(initial);
             State.Success<String, String> expected
                 = new State.Success<>(" this", "that");
@@ -40,7 +40,7 @@ class TokenChoiceTest {
                 new Token("this"),
                 new Token("that"));
         State.Success<String, String> initial
-            = new State.Success<>("nope", null);
+            = new State.Success<>("nope", "");
         State<String, String> result = parser.parse(initial);
         assertEquals(result.getClass(), State.Failure.class);
     }
