@@ -2,13 +2,13 @@ package jmod.parser.example.json;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Collections;
 
 public abstract class Json {
     private Json() {}
 
     public static class Null extends Json {
         public boolean equals(java.lang.Object o) { return o instanceof Null; }
+        public int hashCode() { return 0; }
         public java.lang.String toString() { return "null"; }
     }
 
@@ -18,6 +18,7 @@ public abstract class Json {
         public boolean equals(Boolean that) { return this.value == that.value; }
         public boolean equals(java.lang.Object o)
             { return o instanceof Boolean ? equals((Boolean) o) : false; }
+        public int hashCode() { return java.lang.Boolean.hashCode(value); }
         public java.lang.String toString()
             { return java.lang.String.valueOf(value); }
     }
@@ -28,6 +29,7 @@ public abstract class Json {
         public boolean equals(Number that) { return this.value == that.value; }
         public boolean equals(java.lang.Object o)
             { return o instanceof Number ? equals((Number) o) : false; }
+        public int hashCode() { return Double.hashCode(value); }
         public java.lang.String toString()
             { return java.lang.String.valueOf(value); }
     }
@@ -39,6 +41,7 @@ public abstract class Json {
             { return this.value.equals(that.value); }
         public boolean equals(java.lang.Object o)
             { return o instanceof String ? equals((String) o) : false; }
+        public int hashCode() { return value.hashCode(); }
         public java.lang.String toString() { return value; }
     }
 
@@ -48,17 +51,22 @@ public abstract class Json {
         public Array(List<Json> value) { this.value = value; }
         public Array(Json... values) { this.value = List.of(values); }
         public boolean isEmpty() { return value.isEmpty(); }
-        public boolean equals(Array that)
-            { return this.value.equals(that.value); }
+        public boolean equals(Array that) { return value.equals(that.value); }
         public boolean equals(java.lang.Object o)
             { return o instanceof Array ? equals((Array) o) : false; }
+        public int hashCode() { return value.hashCode(); }
         public java.lang.String toString() { return value.toString(); }
     }
 
-    // TODO
     public static class Object extends Json {
-        public final Map<String, Json> value;
-        public Object(Map<String, Json> value) { this.value = value; }
-        public Object() { this.value = Collections.emptyMap(); }
+        public final Map<Json, Json> value;
+        public Object() { this.value = Map.of(); }
+        public Object(Map<Json, Json> value) { this.value = value; }
+        public boolean isEmpty() { return value.isEmpty(); }
+        public boolean equals(Object that) { return value.equals(that.value); }
+        public boolean equals(java.lang.Object o)
+            { return o instanceof Object ? equals((Object) o) : false; }
+        public int hashCode() { return value.hashCode(); }
+        public java.lang.String toString() { return value.toString(); }
     }
 }
