@@ -9,14 +9,13 @@ import static jmod.util.Lists.append;
 import java.util.List;
 
 public class Separated<ResultT> implements Parser<String, List<ResultT>> {
+    private Parser<String, String> separatorParser;
     private Parser<String, ResultT> parser;
-    private String separator;
-    private Token separatorParser;
 
-    public Separated(String separator, Parser<String, ResultT> parser) {
-        this.separator = separator;
+    public Separated(Parser<String, String> separatorParser,
+                     Parser<String, ResultT> parser) {
+        this.separatorParser = separatorParser;
         this.parser = parser;
-        this.separatorParser = new Token(separator);
     }
 
     @Override

@@ -6,19 +6,21 @@ import jmod.parser.combinator.Sequence;
 import static jmod.util.Lists.first;
 
 public class Between<ResultT> implements Parser<String, ResultT> {
-    private final String left;
-    private final String right;
+    private final Parser<String, String> leftParser;
+    private final Parser<String, String> rightParser;
     private final Parser<String, ResultT> target;
     private final Parser<String, ResultT> parser;
 
-    public Between(String left, String right, Parser<String, ResultT> target) {
-        this.left = left;
-        this.right = right;
+    public Between(Parser<String, String> leftParser,
+                   Parser<String, String> rightParser,
+                   Parser<String, ResultT> target) {
+        this.leftParser = leftParser;
+        this.rightParser = rightParser;
         this.target = target;
         this.parser = new Sequence<String, ResultT>(
-            new Token(left).map(x -> null),
+            leftParser.map(x -> null),
             target,
-            new Token(right).map(x -> null))
+            rightParser.map(x -> null))
             .map(xs -> xs.get(0));
     }
 

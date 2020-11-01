@@ -10,6 +10,7 @@ import jmod.parser.combinator.text.Token;
 import jmod.parser.combinator.text.Regex;
 import jmod.parser.combinator.text.Between;
 import jmod.parser.combinator.text.Separated;
+import jmod.parser.combinator.text.WhitespaceConsumer;
 import static jmod.util.Lists.first;
 
 import java.util.List;
@@ -28,9 +29,8 @@ public class JsonParser implements Parser<String, Json> {
             = new Token("null").map(x -> new Json.Null());
 
         @Override
-        public State<String, Json>
-        parse(State.Success<String, Json> state) {
-            return parser.parse(state);
+        public State<String, Json> parse(State.Success<String, Json> state) {
+            return new WhitespaceConsumer<Json>(parser).parse(state);
         }
     }
 
@@ -41,9 +41,8 @@ public class JsonParser implements Parser<String, Json> {
                 new Token("false").map(x -> new Json.Boolean(false)));
 
         @Override
-        public State<String, Json>
-            parse(State.Success<String, Json> state) {
-            return parser.parse(state);
+        public State<String, Json> parse(State.Success<String, Json> state) {
+            return new WhitespaceConsumer<Json>(parser).parse(state);
         }
     }
 
@@ -54,13 +53,15 @@ public class JsonParser implements Parser<String, Json> {
 
         @Override
         public State<String, Json> parse(State.Success<String, Json> state) {
-            return parser.parse(state);
+            return new WhitespaceConsumer<Json>(parser).parse(state);
         }
     }
 
     private static class StringParser implements Parser<String, Json> {
         private Parser<String, Json> parser
-            = new Between<String>("\"", "\"",
+            = new Between<String>(
+               new Token("\""),
+               new Token("\""),
                 new Optional<String, String>(
                     new Regex("([^\"]+)").map(x -> first(x)),
                     ""))
@@ -68,15 +69,19 @@ public class JsonParser implements Parser<String, Json> {
 
         @Override
         public State<String, Json> parse(State.Success<String, Json> state) {
-            return parser.parse(state);
+            return new WhitespaceConsumer<Json>(parser).parse(state);
         }
     }
 
     private class ArrayParser implements Parser<String, Json> {
         private Parser<String, Json> parser
-            = new Between<Json>("[", "]",
+            = new Between<Json>(
+                new WhitespaceConsumer<String>(new Token("[")),
+                new WhitespaceConsumer<String>(new Token("]")),
                 new Optional<String, Json>(
-                        new Separated<Json>(",", JsonParser.this)
+                    new Separated<Json>(
+                        new WhitespaceConsumer<String>(new Token(",")),
+                        new WhitespaceConsumer<Json>(JsonParser.this))
                         .map(x -> new Json.Array(x)),
                     new Json.Array()));
 

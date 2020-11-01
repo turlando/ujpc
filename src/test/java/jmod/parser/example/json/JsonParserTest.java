@@ -18,6 +18,16 @@ class JsonParserTest {
         assertEquals(expected, result);
     }
 
+    @Test void parseNullWithSpaces() {
+        JsonParser parser = new JsonParser();
+        State.Success<String, Json> initial
+            = new State.Success<>("  null ", new Json.Object());
+        State<String, Json> result = parser.parse(initial);
+        State.Success<String, Json> expected
+            = new State.Success<>(" ", new Json.Null());
+        assertEquals(expected, result);
+    }
+
     @Test void parseTrue() {
         JsonParser parser = new JsonParser();
         State.Success<String, Json> initial
@@ -28,7 +38,27 @@ class JsonParserTest {
         assertEquals(expected, result);
     }
 
+    @Test void parseTrueWithSpaces() {
+        JsonParser parser = new JsonParser();
+        State.Success<String, Json> initial
+            = new State.Success<>("  true ", new Json.Object());
+        State<String, Json> result = parser.parse(initial);
+        State.Success<String, Json> expected
+            = new State.Success<>(" ", new Json.Boolean(true));
+        assertEquals(expected, result);
+    }
+
     @Test void parseFalse() {
+        JsonParser parser = new JsonParser();
+        State.Success<String, Json> initial
+            = new State.Success<>("false", new Json.Object());
+        State<String, Json> result = parser.parse(initial);
+        State.Success<String, Json> expected
+            = new State.Success<>("", new Json.Boolean(false));
+        assertEquals(expected, result);
+    }
+
+    @Test void parseFalseWithSpaces() {
         JsonParser parser = new JsonParser();
         State.Success<String, Json> initial
             = new State.Success<>("false", new Json.Object());
@@ -45,6 +75,16 @@ class JsonParserTest {
         State<String, Json> result = parser.parse(initial);
         State.Success<String, Json> expected
             = new State.Success<>("", new Json.Number(-42.23e7));
+        assertEquals(expected, result);
+    }
+
+    @Test void parseNumberWithSpaces() {
+        JsonParser parser = new JsonParser();
+        State.Success<String, Json> initial
+            = new State.Success<>("  -42.23e7 ", new Json.Object());
+        State<String, Json> result = parser.parse(initial);
+        State.Success<String, Json> expected
+            = new State.Success<>(" ", new Json.Number(-42.23e7));
         assertEquals(expected, result);
     }
 
@@ -67,6 +107,17 @@ class JsonParserTest {
         State.Success<String, Json> expected
             = new State.Success<>(
                 "", new Json.String("foo bar baz"));
+        assertEquals(expected, result);
+    }
+
+    @Test void parseStringWithSpaces() {
+        JsonParser parser = new JsonParser();
+        State.Success<String, Json> initial
+            = new State.Success<>("  \"foo bar baz\" ", new Json.Object());
+        State<String, Json> result = parser.parse(initial);
+        State.Success<String, Json> expected
+            = new State.Success<>(
+                " ", new Json.String("foo bar baz"));
         assertEquals(expected, result);
     }
 
@@ -144,6 +195,18 @@ class JsonParserTest {
                         new Json.Array(
                             new Json.String("foo"),
                             new Json.Number(42)))));
+        assertEquals(expected, result);
+    }
+
+    @Test void parseArrayWithSpaces() {
+        JsonParser parser = new JsonParser();
+        State.Success<String, Json> initial
+            = new State.Success<>("  [  \"foo\"  ,  \"bar\"  ] ", new Json.Object());
+        State<String, Json> result = parser.parse(initial);
+        State.Success<String, Json> expected
+            = new State.Success<>(
+                " ", new Json.Array(new Json.String("foo"),
+                                    new Json.String("bar")));
         assertEquals(expected, result);
     }
 }
