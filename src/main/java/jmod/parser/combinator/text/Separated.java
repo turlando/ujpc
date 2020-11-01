@@ -22,11 +22,13 @@ public class Separated<ResultT> implements Parser<String, List<ResultT>> {
     @Override
     public State<String, List<ResultT>>
     parse(State.Success<String, List<ResultT>> s) {
+        if (s.result == null)
+            return parse(new State.Success<String, List<ResultT>>(
+                s.input, List.of()));
+
         State.Success<String, ResultT> state =
             new State.Success<>(s.input,
-                                s.result == null || s.result.isEmpty()
-                                    ? null
-                                : last(s.result));
+                                s.result.isEmpty() ? null : last(s.result));
 
         return parser.parse(state)
             .match(elSuccess -> separatorParser.parse(
@@ -35,13 +37,8 @@ public class Separated<ResultT> implements Parser<String, List<ResultT>> {
                               new State.Success<String, List<ResultT>>(
                                   sepSuccess.input,
                                   elSuccess.result == null
-                                      ? s.result == null
-                                          ? List.of()
-                                          : s.result
-                                      : append(s.result == null
-                                                   ? List.of()
-                                                   : s.result,
-                                               elSuccess.result))),
+                                      ? s.result
+                                      : append(s.result, elSuccess.result))),
                           sepFailure -> new State.Success<String, List<ResultT>>(
                                             elSuccess.input,
                                             append(s.result, elSuccess.result))),
