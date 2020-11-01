@@ -76,9 +76,8 @@ public class JsonParser implements Parser<String, Json> {
         private Parser<String, Json> parser
             = new Between<Json>("[", "]",
                 new Optional<String, Json>(
-                    new Separated<Json>(
-                        JsonParser.this,
-                        ",").map(x -> new Json.Array(x)),
+                        new Separated<Json>(",", JsonParser.this)
+                        .map(x -> new Json.Array(x)),
                     new Json.Array()));
 
         @Override

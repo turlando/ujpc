@@ -13,9 +13,9 @@ public class Separated<ResultT> implements Parser<String, List<ResultT>> {
     private String separator;
     private Token separatorParser;
 
-    public Separated(Parser<String, ResultT> parser, String separator) {
-        this.parser = parser;
+    public Separated(String separator, Parser<String, ResultT> parser) {
         this.separator = separator;
+        this.parser = parser;
         this.separatorParser = new Token(separator);
     }
 
