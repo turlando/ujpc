@@ -26,14 +26,15 @@ public class Separated<ResultT> implements Parser<String, List<ResultT>> {
             return parse(new State.Success<String, List<ResultT>>(
                 s.input, List.of()));
 
-        State.Success<String, ResultT> state =
-            new State.Success<>(s.input,
-                                s.result.isEmpty() ? null : last(s.result));
+        State.Success<String, ResultT> state
+            = new State.Success<>(
+                s.input,
+                s.result.isEmpty() ? null : last(s.result));
 
         return parser.parse(state)
             .match(elSuccess -> separatorParser.parse(
                    new State.Success<String, String>(elSuccess.input, null))
-                   .match(sepSuccess -> this.parse(
+                   .match(sepSuccess -> parse(
                               new State.Success<String, List<ResultT>>(
                                   sepSuccess.input,
                                   elSuccess.result == null
