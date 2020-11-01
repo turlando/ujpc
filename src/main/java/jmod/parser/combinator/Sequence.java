@@ -28,25 +28,22 @@ public class Sequence<InputT, ResultT>
         if (parsers.isEmpty())
             return s;
 
+        if (s.result == null)
+            return parse(new State.Success<InputT, List<ResultT>>(
+                s.input, List.of()));
+
         State.Success<InputT, ResultT> state =
             new State.Success<InputT, ResultT>(
                 s.input,
-                s.result == null || s.result.isEmpty()
-                    ? null
-                    : last(s.result));
+                s.result.isEmpty() ? null : last(s.result));
 
         return first(parsers).parse(state)
             .match(success -> new Sequence<InputT, ResultT>(rest(parsers))
                                   .parse(new State.Success<InputT, List<ResultT>>(
                                          success.input,
                                          success.result == null
-                                             ? s.result == null
-                                                 ? List.of()
-                                                 : s.result
-                                             : append(s.result == null
-                                                          ? List.of()
-                                                          : s.result,
-                                                      success.result))),
+                                             ? s.result
+                                             : append(s.result, success.result))),
                    failure -> new State.Failure<InputT, List<ResultT>>(
                                   String.format("Expected %s but got %s.",
                                                 first(parsers), state.input)));
