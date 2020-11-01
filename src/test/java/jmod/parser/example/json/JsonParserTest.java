@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import jmod.parser.State;
 
 import java.util.List;
+import java.util.Map;
 
 class JsonParserTest {
     @Test void parseNull() {
@@ -201,12 +202,56 @@ class JsonParserTest {
     @Test void parseArrayWithSpaces() {
         JsonParser parser = new JsonParser();
         State.Success<String, Json> initial
-            = new State.Success<>("  [  \"foo\"  ,  \"bar\"  ] ", new Json.Object());
+            = new State.Success<>(
+                "  [  \"foo\"  ,  \"bar\"  ] ",
+                new Json.Object());
         State<String, Json> result = parser.parse(initial);
         State.Success<String, Json> expected
             = new State.Success<>(
                 " ", new Json.Array(new Json.String("foo"),
                                     new Json.String("bar")));
+        assertEquals(expected, result);
+    }
+
+    @Test void parseEmptyObject() {
+        JsonParser parser = new JsonParser();
+        State.Success<String, Json> initial
+            = new State.Success<>("{}", new Json.Object());
+        State<String, Json> result = parser.parse(initial);
+        State.Success<String, Json> expected
+            = new State.Success<>("", new Json.Object());
+        assertEquals(expected, result);
+    }
+
+    @Test void parseSimpleObject() {
+        JsonParser parser = new JsonParser();
+        State.Success<String, Json> initial
+            = new State.Success<>(
+                "{\"key1\": \"val1\"}",
+                new Json.Object());
+        State<String, Json> result = parser.parse(initial);
+        State.Success<String, Json> expected
+            = new State.Success<>("",
+                 new Json.Object(Map.of(
+                     new Json.String("key1"), new Json.String("val1"))));
+        assertEquals(expected, result);
+    }
+
+    @Test void parseObject() {
+        JsonParser parser = new JsonParser();
+        State.Success<String, Json> initial
+            = new State.Success<>(
+                "{\"key1\": \"val1\", \"key2\": 42, \"key3\": [23, \"42\"]}",
+                new Json.Object());
+        State<String, Json> result = parser.parse(initial);
+        State.Success<String, Json> expected
+            = new State.Success<>("",
+                new Json.Object(Map.of(
+                    new Json.String("key1"), new Json.String("val1"),
+                    new Json.String("key2"), new Json.Number(42),
+                    new Json.String("key3"), new Json.Array(
+                        new Json.Number(23),
+                        new Json.String("42")))));
         assertEquals(expected, result);
     }
 }

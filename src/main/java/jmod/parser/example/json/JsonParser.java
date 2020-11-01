@@ -12,8 +12,10 @@ import jmod.parser.combinator.text.Between;
 import jmod.parser.combinator.text.Separated;
 import jmod.parser.combinator.text.WhitespaceConsumer;
 import static jmod.util.Lists.first;
+import static jmod.util.Maps.merge;
 
 import java.util.List;
+import java.util.Map;
 
 public class JsonParser implements Parser<String, Json> {
     private Parser<String, Json> parser
@@ -22,7 +24,8 @@ public class JsonParser implements Parser<String, Json> {
             new BooleanParser(),
             new NumberParser(),
             new StringParser(),
-            new ArrayParser());
+            new ArrayParser(),
+            new ObjectParser());
 
     public static class NullParser implements Parser<String, Json> {
         private Parser<String, Json> parser
@@ -91,9 +94,28 @@ public class JsonParser implements Parser<String, Json> {
         }
     }
 
-    // private class ObjectParser implements Parser<String, Json> {
-    // TODO
-    // }
+    private class ObjectParser implements Parser<String, Json> {
+        private Parser<String, Json> parser
+            = new Between<Json>(
+                new WhitespaceConsumer<String>(new Token("{")),
+                new WhitespaceConsumer<String>(new Token("}")),
+                new Optional<String, Json>(
+                    new Separated<Map<Json, Json>>(
+                        new WhitespaceConsumer<String>(new Token(",")),
+                        new Sequence<String, Json>(
+                            new StringParser(),
+                            new WhitespaceConsumer<String>(
+                                new Token(":")).map(x -> null),
+                            new WhitespaceConsumer<Json>(JsonParser.this))
+                            .map(x -> Map.of(x.get(0), x.get(1))))
+                    .map(x -> new Json.Object(merge(x))),
+                    new Json.Object()));
+
+        @Override
+        public State<String, Json> parse(State.Success<String, Json> s) {
+            return parser.parse(s);
+        }
+    }
 
     @Override
     public State<String, Json>
