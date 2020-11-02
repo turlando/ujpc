@@ -43,7 +43,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClassName = 'jmod.App'
+    mainClassName = 'ujpc.App'
 }
 
 test {
