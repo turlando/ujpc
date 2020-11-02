@@ -48,6 +48,8 @@ public class ModArchive_181474 {
         new Mod.Sample("",                           0,  0, 64, 0,    1),
         new Mod.Sample("",                           0,  0, 64, 0,    1));
 
+    private final int MOD_PATTERNS_COUNT = 37;
+
     private final ModParser PARSER = new ModParser();
 
     private final byte[] content;
@@ -68,5 +70,9 @@ public class ModArchive_181474 {
     @Test void parseSamples() {
         for (int i = 0; i < 31; i++)
             assertEquals(MOD_SAMPLES.get(i), result.samples.get(i));
+    }
+
+    @Test void parsePatternsCount() {
+        assertEquals(MOD_PATTERNS_COUNT, result.patternsCount);
     }
 }

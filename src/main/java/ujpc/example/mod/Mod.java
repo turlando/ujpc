@@ -5,36 +5,45 @@ import java.util.List;
 public class Mod {
     public final String       title;
     public final List<Sample> samples;
+    public final int          patternsCount;
 
-    public Mod(String title, List<Sample> samples) {
+    public Mod(String title, List<Sample> samples, int patternsCount) {
         this.title = title;
         this.samples = samples;
+        this.patternsCount = patternsCount;
     }
 
     public static class Builder {
         private final String       title;
         private final List<Sample> samples;
+        private final Integer      patternsCount;
 
-        private Builder(String title, List<Sample> samples) {
+        private Builder(String title, List<Sample> samples,
+                        Integer patternsCount) {
             this.title = title;
             this.samples = samples;
+            this.patternsCount = patternsCount;
         }
 
         public static Builder ofTitle(String title)
-            { return new Builder(title, null); }
+            { return new Builder(title, null, null); }
         public static Builder ofSamples(List<Sample> samples)
-            { return new Builder(null, samples); }
+            { return new Builder(null, samples, null); }
+        public static Builder ofPatternsCount(int patternsCount)
+            { return new Builder(null, null, patternsCount); }
 
         public static Mod merge(List<Builder> xs) {
             String       title = null;
             List<Sample> samples = null;
+            Integer      patternsCount = null;
 
             for (Builder x : xs) {
-                title   = x.title   == null ? title   : x.title;
-                samples = x.samples == null ? samples : x.samples;
+                title         = x.title         == null ? title         : x.title;
+                samples       = x.samples       == null ? samples       : x.samples;
+                patternsCount = x.patternsCount == null ? patternsCount : x.patternsCount;
             }
 
-            return new Mod(title, samples);
+            return new Mod(title, samples, patternsCount);
         }
     }
 

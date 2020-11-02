@@ -37,7 +37,8 @@ public class ModParser implements Parser<byte[], Mod> {
             new Ascii(TITLE_LENGTH).map(x -> Mod.Builder.ofTitle(x)),
             new Repeat<byte[], Mod.Sample>(
                 SAMPLES_COUNT,
-                new SampleParser()).map(x-> Mod.Builder.ofSamples(x)))
+                new SampleParser()).map(x -> Mod.Builder.ofSamples(x)),
+            new UInt8().map(x -> Mod.Builder.ofPatternsCount(x)))
           .map(x -> Mod.Builder.merge(x));
 
     @Override
