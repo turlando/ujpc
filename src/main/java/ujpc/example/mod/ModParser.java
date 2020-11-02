@@ -39,7 +39,9 @@ public class ModParser implements Parser<byte[], Mod> {
                 SAMPLES_COUNT,
                 new SampleParser()).map(x -> Mod.Builder.ofSamples(x)),
             new UInt8().map(x -> Mod.Builder.ofPatternsCount(x)),
-            new UInt8().map(x -> null))
+            new UInt8().map(x -> null),
+            new Repeat<byte[], Integer>(128, new UInt8())
+                .map(x -> Mod.Builder.ofPatternsTable(x)))
           .map(x -> Mod.Builder.merge(x));
 
     @Override

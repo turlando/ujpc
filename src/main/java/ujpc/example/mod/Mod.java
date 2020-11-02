@@ -3,47 +3,56 @@ package ujpc.example.mod;
 import java.util.List;
 
 public class Mod {
-    public final String       title;
-    public final List<Sample> samples;
-    public final int          patternsCount;
+    public final String        title;
+    public final List<Sample>  samples;
+    public final int           patternsCount;
+    public final List<Integer> patternsTable;
 
-    public Mod(String title, List<Sample> samples, int patternsCount) {
+    public Mod(String title, List<Sample> samples, int patternsCount,
+               List<Integer> patternsTable) {
         this.title = title;
         this.samples = samples;
         this.patternsCount = patternsCount;
+        this.patternsTable = patternsTable;
     }
 
     public static class Builder {
-        private final String       title;
-        private final List<Sample> samples;
-        private final Integer      patternsCount;
+        private final String        title;
+        private final List<Sample>  samples;
+        private final Integer       patternsCount;
+        private final List<Integer> patternsTable;
 
         private Builder(String title, List<Sample> samples,
-                        Integer patternsCount) {
+                        Integer patternsCount, List<Integer> patternsTable) {
             this.title = title;
             this.samples = samples;
             this.patternsCount = patternsCount;
+            this.patternsTable = patternsTable;
         }
 
         public static Builder ofTitle(String title)
-            { return new Builder(title, null, null); }
+            { return new Builder(title, null, null, null); }
         public static Builder ofSamples(List<Sample> samples)
-            { return new Builder(null, samples, null); }
+            { return new Builder(null, samples, null, null); }
         public static Builder ofPatternsCount(int patternsCount)
-            { return new Builder(null, null, patternsCount); }
+            { return new Builder(null, null, patternsCount, null); }
+        public static Builder ofPatternsTable(List<Integer> patternsTable)
+            { return new Builder(null, null, null, patternsTable); }
 
         public static Mod merge(List<Builder> xs) {
-            String       title = null;
-            List<Sample> samples = null;
-            Integer      patternsCount = null;
+            String        title = null;
+            List<Sample>  samples = null;
+            Integer       patternsCount = null;
+            List<Integer> patternsTable = null;
 
             for (Builder x : xs) {
                 title         = x.title         == null ? title         : x.title;
                 samples       = x.samples       == null ? samples       : x.samples;
                 patternsCount = x.patternsCount == null ? patternsCount : x.patternsCount;
+                patternsTable = x.patternsTable == null ? patternsTable : x.patternsTable;
             }
 
-            return new Mod(title, samples, patternsCount);
+            return new Mod(title, samples, patternsCount, patternsTable);
         }
     }
 

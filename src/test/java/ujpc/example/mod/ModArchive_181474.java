@@ -52,6 +52,16 @@ public class ModArchive_181474 {
 
     private final int MOD_PATTERNS_COUNT = 37;
 
+    private final List<Integer> MOD_PATTERNS_TABLE = List.of(
+         0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16,
+        17, 18, 19,  8,  9, 20, 21,  6,  7, 26, 24, 22, 23, 27, 28, 29, 32,
+        33, 30, 31,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+         0,  0,  0,  0,  0,  0,  0,  0, 0);
+
     private final byte[] content;
     private final State.Success<byte[], Mod> initial;
     private final Mod result;
@@ -76,5 +86,9 @@ public class ModArchive_181474 {
 
     @Test void parsePatternsCount() {
         assertEquals(MOD_PATTERNS_COUNT, result.patternsCount);
+    }
+
+    @Test void parsePatternsTable() {
+        assertEquals(MOD_PATTERNS_TABLE, result.patternsTable);
     }
 }
