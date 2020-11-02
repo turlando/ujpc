@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
 
-public class Maps {
+public final class Maps {
     private Maps() {}
 
     public static <K, V> Map<K, V> merge(Map<K, V> m1, Map<K, V> m2) {

@@ -2,7 +2,7 @@ package ujpc.util;
 
 import java.util.Arrays;
 
-public class Bytes {
+public final class Bytes {
     private Bytes() {}
 
     public static byte[] take(byte[] b, int n) {

@@ -1,6 +1,6 @@
 package ujpc.util;
 
-public class Strings {
+public final class Strings {
     private Strings() {}
 
     public static String take(String s, int n) {
