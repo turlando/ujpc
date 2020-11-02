@@ -3,12 +3,15 @@ package ujpc.parser.combinator;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import static ujpc.parser.ParserTesting.canParse;
+import static ujpc.parser.ParserTesting.cantParse;
+
 import java.util.List;
 import ujpc.parser.State;
 import ujpc.parser.combinator.text.Token;
 
 public class SequenceTest {
-    public static class ParseTokens {
+    public static class TokenSequenceTest {
         private final static Sequence<String, String> PARSER
             = new Sequence<String, String>(
                 new Token("hello"),
@@ -16,27 +19,22 @@ public class SequenceTest {
                 new Token("world"));
 
         @Test void success() {
-            State.Success<String, List<String>> expected
-                = new State.Success<>("", List.of("hello", " ", "world"));
-            assertEquals(expected, PARSER.parse("hello world"));
+            canParse(PARSER, "hello world", List.of("hello", " ", "world"), "");
         }
 
         @Test void failure() {
-            assertEquals(State.Failure.class,
-                         PARSER.parse("hello there").getClass());
+            cantParse(PARSER, "hello there");
         }
     }
 
-    public static class ParseIntegers {
+    public static class IntegerSequenceTest {
         private final static Sequence<String, Integer> PARSER
             = new Sequence<String, Integer>(
                 new Token("42").map(Integer::parseInt),
                 new Token("23").map(Integer::parseInt));
 
         @Test void success() {
-            State.Success<String, List<Integer>> expected
-                = new State.Success<>("", List.of(42, 23));
-            assertEquals(expected, PARSER.parse("4223"));
+            canParse(PARSER, "4223", List.of(42, 23), "");
         }
     }
 }
