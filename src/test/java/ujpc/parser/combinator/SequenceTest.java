@@ -7,43 +7,36 @@ import java.util.List;
 import ujpc.parser.State;
 import ujpc.parser.combinator.text.Token;
 
-class SequenceTest {
-    @Test void parseWithSuccess() {
-        Sequence<String, String> parser
+public class SequenceTest {
+    public static class ParseTokens {
+        private final static Sequence<String, String> PARSER
             = new Sequence<String, String>(
                 new Token("hello"),
                 new Token(" "),
                 new Token("world"));
-        State.Success<String, List<String>> initial
-            = new State.Success<>("hello world", List.of());
-        State<String, List<String>> result = parser.parse(initial);
-        State.Success<String, List<String>> expected
-            = new State.Success<>("", List.of("hello", " ", "world"));
-        assertEquals(expected, result);
+
+        @Test void success() {
+            State.Success<String, List<String>> expected
+                = new State.Success<>("", List.of("hello", " ", "world"));
+            assertEquals(expected, PARSER.parse("hello world"));
+        }
+
+        @Test void failure() {
+            assertEquals(State.Failure.class,
+                         PARSER.parse("hello there").getClass());
+        }
     }
 
-    @Test void parseWithFailure() {
-        Sequence<String, String> parser
-            = new Sequence<String, String>(
-                new Token("hello"),
-                new Token(" "),
-                new Token("there"));
-        State.Success<String, List<String>> initial
-            = new State.Success<>("hello world", List.of());
-        State<String, List<String>> result = parser.parse(initial);
-        assertEquals(result.getClass(), State.Failure.class);
-    }
-
-    @Test void parseWithTransformation() {
-        Sequence<String, Integer> parser
+    public static class ParseIntegers {
+        private final static Sequence<String, Integer> PARSER
             = new Sequence<String, Integer>(
                 new Token("42").map(Integer::parseInt),
                 new Token("23").map(Integer::parseInt));
-        State.Success<String, List<Integer>> initial
-            = new State.Success<>("4223", List.of());
-        State.Success<String, List<Integer>> expected
-            = new State.Success<>("", List.of(42, 23));
-        State<String, List<Integer>> result = parser.parse(initial);
-        assertEquals(expected, result);
+
+        @Test void success() {
+            State.Success<String, List<Integer>> expected
+                = new State.Success<>("", List.of(42, 23));
+            assertEquals(expected, PARSER.parse("4223"));
+        }
     }
 }
