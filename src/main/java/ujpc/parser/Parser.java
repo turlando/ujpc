@@ -13,12 +13,12 @@ public interface Parser<InputT, ResultT> {
                 State.Success<InputT, ResultT> initial
                     = new State.Success<>(s.input, null);
                 return Parser.this.parse(initial)
-                           .match(success ->
-                                      new State.Success<InputT, NewT>(
-                                      success.input,
-                                      fn.apply(success.result)),
-                                  failure -> new State.Failure<InputT, NewT>(
-                                             failure.error));
+                             .match(success ->
+                                    new State.Success<InputT, NewT>(
+                                        success.input,
+                                        fn.apply(success.result)),
+                                    failure -> new State.Failure<InputT, NewT>(
+                                                   failure.error));
             }
         };
     }
