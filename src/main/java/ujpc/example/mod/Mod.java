@@ -7,13 +7,15 @@ public class Mod {
     public final List<Sample>  samples;
     public final int           patternsCount;
     public final List<Integer> patternsTable;
+    public final String        type;
 
     public Mod(String title, List<Sample> samples, int patternsCount,
-               List<Integer> patternsTable) {
-        this.title = title;
-        this.samples = samples;
+               List<Integer> patternsTable, String type) {
+        this.title         = title;
+        this.samples       = samples;
         this.patternsCount = patternsCount;
         this.patternsTable = patternsTable;
+        this.type          = type;
     }
 
     public static class Builder {
@@ -21,38 +23,45 @@ public class Mod {
         private final List<Sample>  samples;
         private final Integer       patternsCount;
         private final List<Integer> patternsTable;
+        private final String        type;
 
         private Builder(String title, List<Sample> samples,
-                        Integer patternsCount, List<Integer> patternsTable) {
+                        Integer patternsCount, List<Integer> patternsTable,
+                        String type) {
             this.title = title;
             this.samples = samples;
             this.patternsCount = patternsCount;
             this.patternsTable = patternsTable;
+            this.type          = type;
         }
 
         public static Builder ofTitle(String title)
-            { return new Builder(title, null, null, null); }
+            { return new Builder(title, null, null, null, null); }
         public static Builder ofSamples(List<Sample> samples)
-            { return new Builder(null, samples, null, null); }
+            { return new Builder(null, samples, null, null, null); }
         public static Builder ofPatternsCount(int patternsCount)
-            { return new Builder(null, null, patternsCount, null); }
+            { return new Builder(null, null, patternsCount, null, null); }
         public static Builder ofPatternsTable(List<Integer> patternsTable)
-            { return new Builder(null, null, null, patternsTable); }
+            { return new Builder(null, null, null, patternsTable, null); }
+        public static Builder ofType(String type)
+            { return new Builder(null, null, null, null, type); }
 
         public static Mod merge(List<Builder> xs) {
-            String        title = null;
-            List<Sample>  samples = null;
+            String        title         = null;
+            List<Sample>  samples       = null;
             Integer       patternsCount = null;
             List<Integer> patternsTable = null;
+            String        type          = null;
 
             for (Builder x : xs) {
                 title         = x.title         == null ? title         : x.title;
                 samples       = x.samples       == null ? samples       : x.samples;
                 patternsCount = x.patternsCount == null ? patternsCount : x.patternsCount;
                 patternsTable = x.patternsTable == null ? patternsTable : x.patternsTable;
+                type          = x.type          == null ? type          : x.type;
             }
 
-            return new Mod(title, samples, patternsCount, patternsTable);
+            return new Mod(title, samples, patternsCount, patternsTable, type);
         }
     }
 

@@ -9,8 +9,9 @@ import ujpc.parser.combinator.binary.UInt8;
 import ujpc.parser.combinator.binary.UInt16;
 
 public class ModParser implements Parser<byte[], Mod> {
-    private final static int TITLE_LENGTH = 20;
+    private final static int TITLE_LENGTH  = 20;
     private final static int SAMPLES_COUNT = 31;
+    private final static int TYPE_LENGTH   =  4;
 
     private static class SampleParser implements Parser<byte[], Mod.Sample> {
         private final static int NAME_LENGTH = 22;
@@ -41,7 +42,8 @@ public class ModParser implements Parser<byte[], Mod> {
             new UInt8().map(x -> Mod.Builder.ofPatternsCount(x)),
             new UInt8().map(x -> null),
             new Repeat<byte[], Integer>(128, new UInt8())
-                .map(x -> Mod.Builder.ofPatternsTable(x)))
+                .map(x -> Mod.Builder.ofPatternsTable(x)),
+            new Ascii(TYPE_LENGTH).map(x -> Mod.Builder.ofType(x)))
           .map(x -> Mod.Builder.merge(x));
 
     @Override

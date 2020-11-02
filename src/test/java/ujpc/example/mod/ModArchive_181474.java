@@ -62,6 +62,8 @@ public class ModArchive_181474 {
          0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
          0,  0,  0,  0,  0,  0,  0,  0, 0);
 
+    private final static String MOD_TYPE = "M.K.";
+
     private final byte[] content;
     private final State.Success<byte[], Mod> initial;
     private final Mod result;
@@ -90,5 +92,9 @@ public class ModArchive_181474 {
 
     @Test void parsePatternsTable() {
         assertEquals(MOD_PATTERNS_TABLE, result.patternsTable);
+    }
+
+    @Test void parseType() {
+        assertEquals(MOD_TYPE, result.type);
     }
 }
