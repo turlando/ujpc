@@ -9,7 +9,7 @@ public abstract class State<InputT, ResultT> {
     public abstract <T> T match(Function<Success<InputT, ResultT>, T> success,
                                 Function<Failure<InputT, ResultT>, T> failure);
 
-    public static class Success<InputT, ResultT>
+    public final static class Success<InputT, ResultT>
                         extends State<InputT, ResultT> {
         public final InputT input;
         public final ResultT result;
@@ -40,8 +40,8 @@ public abstract class State<InputT, ResultT> {
         }
     }
 
-    public static class Failure<InputT, ResultT>
-                  extends State<InputT, ResultT> {
+    public final static class Failure<InputT, ResultT>
+                        extends State<InputT, ResultT> {
         public final String error;
 
         public Failure(String error) {
