@@ -56,6 +56,25 @@ public class Mod {
             this.repeatLength = repeatLength;
         }
 
+        public boolean equals(Sample that) {
+            return this.name.equals(that.name)
+                && this.length == that.length
+                && this.finetune == that.finetune
+                && this.volume == that.volume
+                && this.repeatOffset == that.repeatOffset
+                && this.repeatLength == that.repeatLength;
+        }
+
+        public boolean equals(Object o)
+            { return o instanceof Sample ? equals((Sample) o) : false; }
+
+        public String toString() {
+            return String.format("Sample(name=%s, length=%d, finetune=%d, " +
+                                 "volume=%d, repeatOffset=%d, repeatLength=%d)",
+                                 name, length, finetune, volume,
+                                 repeatOffset, repeatLength);
+        }
+
         public static class Builder {
             private final String  name;
             private final Integer length;
@@ -101,9 +120,11 @@ public class Mod {
                     finetune     = x.finetune == null     ? finetune     : x.finetune;
                     volume       = x.volume == null       ? volume       : x.volume;
                     repeatOffset = x.repeatOffset == null ? repeatOffset : x.repeatOffset;
+                    repeatLength = x.repeatLength == null ? repeatLength : x.repeatLength;
                 }
 
-                return new Sample(name, length, finetune, volume, repeatOffset, repeatLength);
+                return new Sample(name, length, finetune,
+                                  volume, repeatOffset, repeatLength);
             }
         }
     }
