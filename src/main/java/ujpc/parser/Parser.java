@@ -5,6 +5,10 @@ import java.util.function.Function;
 public interface Parser<InputT, ResultT> {
     State<InputT, ResultT> parse(State.Success<InputT, ResultT> s);
 
+    default State<InputT, ResultT> parse(InputT s) {
+        return parse(new State.Success<InputT, ResultT>(s, null));
+    }
+
     default <NewT> Parser<InputT, NewT>
     map(Function<ResultT, NewT> fn) {
         return new Parser<InputT, NewT>() {
