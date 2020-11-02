@@ -1,12 +1,10 @@
 package ujpc.parser.combinator;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static ujpc.parser.ParserTesting.canParse;
 import static ujpc.parser.ParserTesting.cantParse;
 
-import ujpc.parser.State;
 import ujpc.parser.combinator.text.Token;
 
 public class ChoiceTest {

@@ -1,13 +1,11 @@
 package ujpc.parser.combinator.text;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static ujpc.parser.ParserTesting.canParse;
 import static ujpc.parser.ParserTesting.cantParse;
 
 import java.util.List;
-import ujpc.parser.State;
 
 class RegexTest {
     public static class StringRegexTest {
