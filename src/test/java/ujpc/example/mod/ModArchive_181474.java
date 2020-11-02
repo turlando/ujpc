@@ -8,6 +8,8 @@ import java.util.List;
 import ujpc.parser.State;
 
 public class ModArchive_181474 {
+    private final ModParser PARSER = new ModParser();
+
     private final static String FILE_NAME
         = "/ujpc/example/mod/" +
           "ModArchive.181474 - DJ STAX - Can You Feel It (Remix).mod";
@@ -50,8 +52,6 @@ public class ModArchive_181474 {
 
     private final int MOD_PATTERNS_COUNT = 37;
 
-    private final ModParser PARSER = new ModParser();
-
     private final byte[] content;
     private final State.Success<byte[], Mod> initial;
     private final Mod result;
@@ -60,7 +60,9 @@ public class ModArchive_181474 {
         this.content = this.getClass().getResourceAsStream(FILE_NAME)
                                       .readAllBytes();
         this.initial = new State.Success<byte[], Mod>(content, null);
-        this.result = PARSER.parse(initial).match(s -> s.result, f -> null);
+        this.result = PARSER.parse(initial)
+                             .match(s -> s.result,
+                                    f -> {throw new RuntimeException(f.error);});
     }
 
     @Test void parseTitle() {
