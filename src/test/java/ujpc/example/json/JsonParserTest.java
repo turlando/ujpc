@@ -1,5 +1,6 @@
 package ujpc.example.json;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static ujpc.parser.ParserTesting.canParse;
@@ -11,6 +12,7 @@ import java.util.Map;
 class JsonParserTest {
     private final static JsonParser PARSER = new JsonParser();
 
+    @Nested
     public class NullTest {
         private final Json.Null n = new Json.Null();
 
@@ -23,6 +25,7 @@ class JsonParserTest {
         }
     }
 
+    @Nested
     public class BooleanTest {
         private final Json.Boolean t = new Json.Boolean(true);
         private final Json.Boolean f = new Json.Boolean(false);
@@ -44,6 +47,7 @@ class JsonParserTest {
         }
     }
 
+    @Nested
     public class NumberTest {
         @Test void simple() {
             canParse(PARSER, "-42.23e7", new Json.Number(-42.23e7), "");
@@ -54,6 +58,7 @@ class JsonParserTest {
         }
     }
 
+    @Nested
     public class StringTest {
         @Test void emptyString() {
             canParse(PARSER, "\"\"", new Json.String(""), "");
@@ -74,6 +79,7 @@ class JsonParserTest {
         }
     }
 
+    @Nested
     public class ArrayTest {
         @Test void empty() {
             canParse(PARSER, "[]", new Json.Array(List.of()), "");
@@ -115,10 +121,11 @@ class JsonParserTest {
                      "  [  \"foo\"  ,  \"bar\"  ] ",
                      new Json.Array(new Json.String("foo"),
                                     new Json.String("bar")),
-                     "");
+                     " ");
         }
     }
 
+    @Nested
     public class ObjectTest {
         @Test void empty() {
             canParse(PARSER, "{}", new Json.Object(), "");
