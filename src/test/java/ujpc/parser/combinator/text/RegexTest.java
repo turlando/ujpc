@@ -7,7 +7,7 @@ import static ujpc.parser.ParserTesting.cantParse;
 
 import java.util.List;
 
-class RegexTest {
+public class RegexTest {
     public static class StringRegexTest {
         private final static Regex PARSER = new Regex("([a-zA-Z]+)");
 

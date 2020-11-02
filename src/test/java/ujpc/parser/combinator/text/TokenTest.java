@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static ujpc.parser.ParserTesting.canParse;
 import static ujpc.parser.ParserTesting.cantParse;
 
-class TokenTest {
+public class TokenTest {
     private final static Token PARSER = new Token("test");
 
     @Test void success() {
