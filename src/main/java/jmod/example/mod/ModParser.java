@@ -1,4 +1,4 @@
-package jmod.mod;
+package jmod.example.mod;
 
 import jmod.parser.Parser;
 import jmod.parser.State;

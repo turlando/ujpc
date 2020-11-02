@@ -1,4 +1,4 @@
-package jmod.parser.example.json;
+package jmod.example.json;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;

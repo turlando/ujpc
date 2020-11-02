@@ -1,4 +1,4 @@
-package jmod.parser.example.json;
+package jmod.example.json;
 
 import java.util.stream.Collectors;
 import jmod.parser.Parser;

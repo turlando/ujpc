@@ -1,4 +1,4 @@
-package jmod.parser.example.json;
+package jmod.example.json;
 
 import java.util.List;
 import java.util.Map;
