@@ -10,13 +10,11 @@ public interface Parser<InputT, ResultT> {
         return new Parser<InputT, NewT>() {
             @Override
             public State<InputT, NewT> parse(InputT in) {
-                return Parser.this.parse(in)
-                             .match(success ->
-                                    new State.Success<InputT, NewT>(
-                                        success.input,
-                                        fn.apply(success.result)),
-                                    failure -> new State.Failure<InputT, NewT>(
-                                                   failure.error));
+                return Parser.this.parse(in).match(
+                    success -> new State.Success<InputT, NewT>(
+                                   success.input,
+                                   fn.apply(success.result)),
+                    failure -> new State.Failure<InputT, NewT>(failure.error));
             }
         };
     }
