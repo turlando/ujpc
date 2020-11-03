@@ -18,18 +18,16 @@ public class Regex implements Parser<String, List<String>> {
     public Regex(Pattern target) { this.target = target; }
 
     @Override
-    public State<String, List<String>>
-    parse(State.Success<String, List<String>> state) {
-        Matcher matcher = target.matcher(state.input);
+    public State<String, List<String>> parse(String in) {
+        Matcher matcher = target.matcher(in);
 
         if (matcher.lookingAt())
             return new State.Success<String, List<String>>(
-                drop(state.input, matcher.end()),
+                drop(in, matcher.end()),
                 matchResultToStrings(matcher.toMatchResult()));
         else
             return new State.Failure<String, List<String>>(
-                String.format("Tried to match %s but got %s.",
-                              target, state.input));
+                String.format("Tried to match %s but got %s.", target, in));
     }
 
     @Override

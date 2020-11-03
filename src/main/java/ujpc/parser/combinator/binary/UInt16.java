@@ -10,9 +10,9 @@ import java.nio.ByteBuffer;
 
 public class UInt16 implements Parser<byte[], Integer> {
     @Override
-    public State<byte[], Integer> parse(State.Success<byte[], Integer> s) {
+    public State<byte[], Integer> parse(byte[] in) {
         return new State.Success<byte[], Integer>(
-            drop(s.input, 2),
-            (int) ByteBuffer.wrap(take(s.input, 2)).getShort());
+            drop(in, 2),
+            (int) ByteBuffer.wrap(take(in, 2)).getShort());
     }
 }

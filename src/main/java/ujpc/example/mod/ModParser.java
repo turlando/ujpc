@@ -27,9 +27,8 @@ public class ModParser implements Parser<byte[], Mod> {
               .map(x -> Mod.Sample.Builder.merge(x));
 
         @Override
-        public State<byte[], Mod.Sample>
-        parse(State.Success<byte[], Mod.Sample> s) {
-            return parser.parse(s);
+        public State<byte[], Mod.Sample> parse(byte[] in) {
+            return parser.parse(in);
         }
     }
 
@@ -47,7 +46,7 @@ public class ModParser implements Parser<byte[], Mod> {
           .map(x -> Mod.Builder.merge(x));
 
     @Override
-    public State<byte[], Mod> parse(State.Success<byte[], Mod> s) {
-        return parser.parse(s);
+    public State<byte[], Mod> parse(byte[] in) {
+        return parser.parse(in);
     }
 }

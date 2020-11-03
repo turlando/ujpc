@@ -23,29 +23,22 @@ public class Sequence<InputT, ResultT>
     }
 
     @Override
-    public State<InputT, List<ResultT>>
-           parse(State.Success<InputT, List<ResultT>> s) {
+    public State<InputT, List<ResultT>> parse(InputT in) {
+        return parse(in, List.of());
+    }
+
+    private State<InputT, List<ResultT>> parse(InputT in, List<ResultT> acc) {
         if (parsers.isEmpty())
-            return s;
+            return new State.Success<InputT, List<ResultT>>(in, acc);
 
-        if (s.result == null)
-            return parse(new State.Success<InputT, List<ResultT>>(
-                s.input, List.of()));
-
-        State.Success<InputT, ResultT> state =
-            new State.Success<InputT, ResultT>(
-                s.input,
-                s.result.isEmpty() ? null : last(s.result));
-
-        return first(parsers).parse(state)
+        return first(parsers).parse(in)
             .match(success -> new Sequence<InputT, ResultT>(rest(parsers))
-                                  .parse(new State.Success<InputT, List<ResultT>>(
-                                         success.input,
+                                  .parse(success.input,
                                          success.result == null
-                                             ? s.result
-                                             : append(s.result, success.result))),
+                                         ? acc
+                                         : append(acc, success.result)),
                    failure -> new State.Failure<InputT, List<ResultT>>(
                                   String.format("Expected %s but got %s.",
-                                                first(parsers), state.input)));
+                                                first(parsers), in)));
     }
 }

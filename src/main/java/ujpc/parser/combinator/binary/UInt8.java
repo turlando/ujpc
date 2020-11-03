@@ -11,9 +11,7 @@ import java.nio.ByteBuffer;
 
 public class UInt8 implements Parser<byte[], Integer> {
     @Override
-    public State<byte[], Integer> parse(State.Success<byte[], Integer> s) {
-        return new State.Success<byte[], Integer>(
-            drop(s.input, 1),
-            (int) first(s.input));
+    public State<byte[], Integer> parse(byte[] in) {
+        return new State.Success<byte[], Integer>(drop(in, 1), (int) first(in));
     }
 }

@@ -3,20 +3,14 @@ package ujpc.parser;
 import java.util.function.Function;
 
 public interface Parser<InputT, ResultT> {
-    State<InputT, ResultT> parse(State.Success<InputT, ResultT> s);
-
-    default State<InputT, ResultT> parse(InputT s) {
-        return parse(new State.Success<InputT, ResultT>(s, null));
-    }
+    State<InputT, ResultT> parse(InputT in);
 
     default <NewT> Parser<InputT, NewT>
     map(Function<ResultT, NewT> fn) {
         return new Parser<InputT, NewT>() {
             @Override
-            public State<InputT, NewT> parse(State.Success<InputT, NewT> s) {
-                State.Success<InputT, ResultT> initial
-                    = new State.Success<>(s.input, null);
-                return Parser.this.parse(initial)
+            public State<InputT, NewT> parse(InputT in) {
+                return Parser.this.parse(in)
                              .match(success ->
                                     new State.Success<InputT, NewT>(
                                         success.input,

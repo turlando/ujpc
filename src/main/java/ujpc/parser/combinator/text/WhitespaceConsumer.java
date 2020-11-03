@@ -14,11 +14,11 @@ public class WhitespaceConsumer<ResultT> implements Parser<String, ResultT> {
     }
 
     @Override
-    public State<String, ResultT> parse(State.Success<String, ResultT> s) {
+    public State<String, ResultT> parse(String in) {
         return new Sequence<String, ResultT>(
             new Whitespace().map(x -> null),
             parser)
         .map(x -> first(x))
-        .parse(s);
+        .parse(in);
     }
 }

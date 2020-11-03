@@ -25,7 +25,7 @@ public class Between<ResultT> implements Parser<String, ResultT> {
     }
 
     @Override
-    public State<String, ResultT> parse(State.Success<String, ResultT> s) {
-        return parser.parse(s);
+    public State<String, ResultT> parse(String in) {
+        return parser.parse(in);
     }
 }

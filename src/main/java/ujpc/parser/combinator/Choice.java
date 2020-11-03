@@ -29,16 +29,16 @@ public class Choice<InputT, ResultT>
     }
 
     @Override
-    public State<InputT, ResultT> parse(State.Success<InputT, ResultT> s) {
+    public State<InputT, ResultT> parse(InputT in) {
         if (parsers.isEmpty())
             return new State.Failure<InputT, ResultT>(
                 String.format("Could not match any of %s.", failedParsers));
 
-        return first(parsers).parse(s)
+        return first(parsers).parse(in)
             .match(success -> success,
                    failure -> new Choice<InputT, ResultT>(
                                   rest(parsers),
                                   append(failedParsers, first(parsers)))
-                              .parse(s));
+                                  .parse(in));
     }
 }

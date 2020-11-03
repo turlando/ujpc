@@ -15,10 +15,9 @@ public class Optional<InputT, ResultT>
     }
 
     @Override
-    public State<InputT, ResultT> parse(State.Success<InputT, ResultT> s) {
-        return parser.parse(s)
+    public State<InputT, ResultT> parse(InputT in) {
+        return parser.parse(in)
             .match(success -> success,
-                   failure -> new State.Success<InputT, ResultT>(
-                                  s.input, otherwise));
+                   failure -> new State.Success<InputT, ResultT>(in, otherwise));
     }
 }

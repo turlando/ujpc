@@ -20,14 +20,14 @@ public class Token implements Parser<String, String> {
     }
 
     @Override
-    public State<String, String> parse(State.Success<String, String> state) {
-        State<String, String> result = parser.parse(state);
+    public State<String, String> parse(String in) {
+        State<String, String> result = parser.parse(in);
 
         return result.match(
             success -> success,
             failure -> new State.Failure<String, String>(
                            String.format("Tried to match \"%s\" but got \"%s\".",
-                                         target, state.input)));
+                                         target, in)));
     }
 
     @Override

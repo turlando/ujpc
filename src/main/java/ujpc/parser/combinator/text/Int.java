@@ -10,7 +10,7 @@ public class Int implements Parser<String, Integer> {
               .map(result -> Integer.parseInt(first(result)));
 
     @Override
-    public State<String, Integer> parse(State.Success<String, Integer> s) {
-        return parser.parse(s);
+    public State<String, Integer> parse(String in) {
+        return parser.parse(in);
     }
 }

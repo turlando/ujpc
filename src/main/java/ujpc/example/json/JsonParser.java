@@ -32,8 +32,8 @@ public class JsonParser implements Parser<String, Json> {
             = new Token("null").map(x -> new Json.Null());
 
         @Override
-        public State<String, Json> parse(State.Success<String, Json> state) {
-            return new WhitespaceConsumer<Json>(parser).parse(state);
+        public State<String, Json> parse(String in) {
+            return new WhitespaceConsumer<Json>(parser).parse(in);
         }
     }
 
@@ -44,8 +44,8 @@ public class JsonParser implements Parser<String, Json> {
                 new Token("false").map(x -> new Json.Boolean(false)));
 
         @Override
-        public State<String, Json> parse(State.Success<String, Json> state) {
-            return new WhitespaceConsumer<Json>(parser).parse(state);
+        public State<String, Json> parse(String in) {
+            return new WhitespaceConsumer<Json>(parser).parse(in);
         }
     }
 
@@ -55,8 +55,8 @@ public class JsonParser implements Parser<String, Json> {
                   .map(x -> new Json.Number(Double.valueOf(first(x))));
 
         @Override
-        public State<String, Json> parse(State.Success<String, Json> state) {
-            return new WhitespaceConsumer<Json>(parser).parse(state);
+        public State<String, Json> parse(String in) {
+            return new WhitespaceConsumer<Json>(parser).parse(in);
         }
     }
 
@@ -71,8 +71,8 @@ public class JsonParser implements Parser<String, Json> {
               .map(x -> new Json.String(x));
 
         @Override
-        public State<String, Json> parse(State.Success<String, Json> state) {
-            return new WhitespaceConsumer<Json>(parser).parse(state);
+        public State<String, Json> parse(String in) {
+            return new WhitespaceConsumer<Json>(parser).parse(in);
         }
     }
 
@@ -89,8 +89,8 @@ public class JsonParser implements Parser<String, Json> {
                     new Json.Array()));
 
         @Override
-        public State<String, Json> parse(State.Success<String, Json> state) {
-            return parser.parse(state);
+        public State<String, Json> parse(String in) {
+            return parser.parse(in);
         }
     }
 
@@ -112,14 +112,13 @@ public class JsonParser implements Parser<String, Json> {
                     new Json.Object()));
 
         @Override
-        public State<String, Json> parse(State.Success<String, Json> s) {
-            return parser.parse(s);
+        public State<String, Json> parse(String in) {
+            return parser.parse(in);
         }
     }
 
     @Override
-    public State<String, Json>
-        parse(State.Success<String, Json> s) {
-        return parser.parse(s);
+    public State<String, Json> parse(String in) {
+        return parser.parse(in);
     }
 }

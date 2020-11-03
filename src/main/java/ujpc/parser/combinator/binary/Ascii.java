@@ -14,11 +14,11 @@ public class Ascii implements Parser<byte[], String> {
     }
 
     @Override
-    public State<byte[], String> parse(State.Success<byte[], String> s) {
+    public State<byte[], String> parse(byte[] in) {
         try {
             return new State.Success<byte[], String>(
-                drop(s.input, length),
-                new String(take(s.input, length), "US-ASCII").trim());
+                drop(in, length),
+                new String(take(in, length), "US-ASCII").trim());
         } catch (java.io.UnsupportedEncodingException e) {
             return new State.Failure<byte[], String>(e.toString());
         }

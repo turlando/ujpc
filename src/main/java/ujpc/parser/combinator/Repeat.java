@@ -20,27 +20,20 @@ public class Repeat<InputT, ResultT>
     }
 
     @Override
-    public State<InputT, List<ResultT>>
-           parse(State.Success<InputT, List<ResultT>> s) {
+    public State<InputT, List<ResultT>> parse(InputT in) {
+        return parse(in, List.of());
+    }
+
+    private State<InputT, List<ResultT>> parse(InputT in, List<ResultT> acc) {
         if (count == 0)
-            return s;
+            return new State.Success<InputT, List<ResultT>>(in, acc);
 
-        if (s.result == null)
-            return parse(new State.Success<InputT, List<ResultT>>(
-                s.input, List.of()));
-
-        State.Success<InputT, ResultT> state =
-            new State.Success<InputT, ResultT>(
-                s.input,
-                s.result.isEmpty() ? null : last(s.result));
-
-        return parser.parse(state)
+        return parser.parse(in)
             .match(success -> new Repeat<InputT, ResultT>(count - 1, parser)
-                                  .parse(new State.Success<InputT, List<ResultT>>(
-                                         success.input,
+                                  .parse(success.input,
                                          success.result == null
-                                             ? s.result
-                                             : append(s.result, success.result))),
+                                         ? acc
+                                         : append(acc, success.result)),
                    failure -> new State.Failure<InputT, List<ResultT>>(
                                   failure.error));
     }

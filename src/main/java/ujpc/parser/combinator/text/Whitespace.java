@@ -10,7 +10,7 @@ public class Whitespace implements Parser<String, String> {
         = new Regex("(\\s*)").map(x -> first(x));
 
     @Override
-    public State<String, String> parse(State.Success<String, String> s) {
-        return parser.parse(s);
+    public State<String, String> parse(String in) {
+        return parser.parse(in);
     }
 }
