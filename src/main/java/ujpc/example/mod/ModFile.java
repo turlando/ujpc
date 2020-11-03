@@ -14,7 +14,7 @@ public class ModFile {
     public ModFile(String path) throws IOException {
         this.path  = path;
         this.bytes = Files.readAllBytes(Paths.get(path));
-        this.mod   = PARSER.parse(bytes).match(s -> s.result, f -> null);
+        this.mod   = PARSER.parse(bytes).getOrThrow();
     }
 
     @Override

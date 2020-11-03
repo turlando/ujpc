@@ -9,6 +9,11 @@ public abstract class State<InputT, ResultT> {
     public abstract <T> T match(Function<Success<InputT, ResultT>, T> success,
                                 Function<Failure<InputT, ResultT>, T> failure);
 
+    public ResultT getOrThrow() {
+        return match(success -> success.result,
+                     failure -> { throw new RuntimeException(failure.error); });
+    }
+
     public final static class Success<InputT, ResultT>
                         extends State<InputT, ResultT> {
         public final InputT input;
