@@ -35,6 +35,8 @@ public class JsonParser implements Parser<String, Json> {
         public State<String, Json> parse(String in) {
             return new WhitespaceConsumer<Json>(parser).parse(in);
         }
+
+        public String toString() { return "JsonParser.NullParser()"; }
     }
 
     public static class BooleanParser implements Parser<String, Json> {
@@ -47,6 +49,8 @@ public class JsonParser implements Parser<String, Json> {
         public State<String, Json> parse(String in) {
             return new WhitespaceConsumer<Json>(parser).parse(in);
         }
+
+        public String toString() { return "JsonParser.BooleanParser()"; }
     }
 
     public static class NumberParser implements Parser<String, Json> {
@@ -58,6 +62,8 @@ public class JsonParser implements Parser<String, Json> {
         public State<String, Json> parse(String in) {
             return new WhitespaceConsumer<Json>(parser).parse(in);
         }
+
+        public String toString() { return "JsonParser.NumberParser()"; }
     }
 
     private static class StringParser implements Parser<String, Json> {
@@ -74,6 +80,8 @@ public class JsonParser implements Parser<String, Json> {
         public State<String, Json> parse(String in) {
             return new WhitespaceConsumer<Json>(parser).parse(in);
         }
+
+        public String toString() { return "JsonParser.StringParser()"; }
     }
 
     private class ArrayParser implements Parser<String, Json> {
@@ -92,6 +100,8 @@ public class JsonParser implements Parser<String, Json> {
         public State<String, Json> parse(String in) {
             return parser.parse(in);
         }
+
+        public String toString() { return "JsonParser.ArrayParser()"; }
     }
 
     private class ObjectParser implements Parser<String, Json> {
@@ -115,6 +125,8 @@ public class JsonParser implements Parser<String, Json> {
         public State<String, Json> parse(String in) {
             return parser.parse(in);
         }
+
+        public String toString() { return "JsonParser.ObjectParser()"; }
     }
 
     @Override
