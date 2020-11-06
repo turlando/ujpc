@@ -41,4 +41,8 @@ public class Choice<InputT, ResultT>
                                   append(failedParsers, first(parsers)))
                                   .parse(in));
     }
+
+    public String toString() {
+        return String.format("Choice(%s)", parsers);
+    }
 }

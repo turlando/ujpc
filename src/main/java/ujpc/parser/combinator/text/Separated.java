@@ -36,4 +36,8 @@ public class Separated<ResultT> implements Parser<String, List<ResultT>> {
             elFailure -> new State.Failure<String, List<ResultT>>(
                                   elFailure.error));
     }
+
+    public String toString() {
+        return String.format("Separated(by=%s, in=%s)", separatorParser, parser);
+    }
 }

@@ -38,7 +38,7 @@ public class Sequence<InputT, ResultT>
                                          ? acc
                                          : append(acc, success.result)),
                    failure -> new State.Failure<InputT, List<ResultT>>(
-                                  String.format("Expected %s but got %s.",
+                                  String.format("Expected %s but got \"%s\".",
                                                 first(parsers), in)));
     }
 }
