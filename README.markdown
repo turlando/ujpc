@@ -13,6 +13,15 @@
 * `gradle javadoc`: generate Javadoc and UML
 * `gradle clean`: remove all the generated artifacts
 
+## Interactive environment
+
+Is it possible and encorauged to experiment with this project using a REPL.
+
+If you already have `jshell` in your `PATH` just run
+`jshell --class-path build/libs/ujpc.jar`. Otherwise you can run
+`gradle --console plain jshell` but your experience will be limited as no text
+navigation, history search or command completion will be provided.
+
 ## Running the examples
 
 Currently available examples:
