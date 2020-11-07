@@ -37,12 +37,12 @@ public class ModParser implements Parser<byte[], Mod> {
         = new Ascii(TITLE_LENGTH).bind(title ->
           new Repeat<byte[], Mod.Sample>(
               SAMPLES_COUNT, new SampleParser()).bind(samples ->
-          new UInt8().bind(patternsCount ->
+          new UInt8().bind(length ->
           new UInt8().bind(restartPosition ->
           new Repeat<byte[], Integer>(
               PATTERN_TABLE_LENGTH, new UInt8()).bind(patternsTable ->
           new Ascii(TYPE_LENGTH).map(type ->
-              new Mod(title, samples, patternsCount, patternsTable, type)))))));
+              new Mod(title, samples, length, patternsTable, type)))))));
 
     @Override
     public State<byte[], Mod> parse(byte[] in) {

@@ -5,15 +5,15 @@ import java.util.List;
 public class Mod {
     public final String        title;
     public final List<Sample>  samples;
-    public final int           patternsCount;
+    public final int           length;
     public final List<Integer> patternsTable;
     public final String        type;
 
-    public Mod(String title, List<Sample> samples, int patternsCount,
+    public Mod(String title, List<Sample> samples, int length,
                List<Integer> patternsTable, String type) {
         this.title         = title;
         this.samples       = samples;
-        this.patternsCount = patternsCount;
+        this.length = length;
         this.patternsTable = patternsTable;
         this.type          = type;
     }
@@ -21,7 +21,7 @@ public class Mod {
     public boolean equals(Mod that) {
         return this.title.equals(that.title)
             && this.samples.equals(that.samples)
-            && this.patternsCount == that.patternsCount
+            && this.length == that.length
             && this.patternsTable.equals(that.patternsTable)
             && this.type.equals(that.type);
     }

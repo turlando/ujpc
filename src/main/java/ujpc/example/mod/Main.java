@@ -17,7 +17,7 @@ public class Main {
         for (Mod.Sample sample : mod.samples)
             System.out.println("  - " + sample);
 
-        System.out.println("Patterns: " + mod.patternsCount);
+        System.out.println("Patterns: " + mod.length);
         System.out.println("Type: " + mod.type);
     }
 

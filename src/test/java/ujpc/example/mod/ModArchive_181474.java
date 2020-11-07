@@ -84,7 +84,7 @@ public class ModArchive_181474 {
     }
 
     @Test void parsePatternsCount() {
-        assertEquals(MOD_PATTERNS_COUNT, result.patternsCount);
+        assertEquals(MOD_PATTERNS_COUNT, result.length);
     }
 
     @Test void parsePatternsTable() {
