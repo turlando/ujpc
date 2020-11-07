@@ -8,14 +8,17 @@ public class Mod {
     public final int           length;
     public final List<Integer> patternsTable;
     public final String        type;
+    public final List<Pattern> patterns;
 
     public Mod(String title, List<Sample> samples, int length,
-               List<Integer> patternsTable, String type) {
+               List<Integer> patternsTable, String type,
+               List<Pattern> patterns) {
         this.title         = title;
         this.samples       = samples;
         this.length = length;
         this.patternsTable = patternsTable;
         this.type          = type;
+        this.patterns      = patterns;
     }
 
     public boolean equals(Mod that) {
@@ -23,7 +26,8 @@ public class Mod {
             && this.samples.equals(that.samples)
             && this.length == that.length
             && this.patternsTable.equals(that.patternsTable)
-            && this.type.equals(that.type);
+            && this.type.equals(that.type)
+            && this.patterns.equals(that.patterns);
     }
 
     public boolean equals(Object o)
@@ -64,6 +68,47 @@ public class Mod {
                                  "volume=%d, repeatOffset=%d, repeatLength=%d)",
                                  name, length, finetune, volume,
                                  repeatOffset, repeatLength);
+        }
+    }
+
+    public static class Pattern {
+        private final List<Row> rows;
+
+        public Pattern(List<Row> rows) {
+            this.rows = rows;
+        }
+
+        public boolean equals(Pattern that) {
+            return this.rows.equals(that.rows);
+        }
+
+        public boolean equals(Object o)
+            { return o instanceof Sample ? equals((Pattern) o) : false; }
+
+        public static class Row {
+            private final int sample;
+            private final int period;
+            private final int effect;
+
+            public Row(int sample, int period, int effect) {
+                this.sample = sample;
+                this.period = period;
+                this.effect = effect;
+            }
+
+            public boolean equals(Row that) {
+                return this.sample == that.sample
+                    && this.period == that.period
+                    && this.effect == that.effect;
+            }
+
+            public boolean equals(Object o)
+                { return o instanceof Sample ? equals((Row) o) : false; }
+
+            public String toString() {
+                return String.format("Row(sample=%d, period=%d, effect=%d)",
+                                     sample, period, effect);
+            }
         }
     }
 }
