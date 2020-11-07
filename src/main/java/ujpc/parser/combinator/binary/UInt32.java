@@ -13,6 +13,6 @@ public class UInt32 implements Parser<byte[], Integer> {
     public State<byte[], Integer> parse(byte[] in) {
         return new State.Success<byte[], Integer>(
             drop(in, 4),
-            (int) ByteBuffer.wrap(take(in, 4)).getShort());
+            (int) ByteBuffer.wrap(take(in, 4)).getInt());
     }
 }
