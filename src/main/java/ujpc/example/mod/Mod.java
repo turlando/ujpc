@@ -72,7 +72,7 @@ public class Mod {
     }
 
     public static class Pattern {
-        private final List<Row> rows;
+        public final List<Row> rows;
 
         public Pattern(List<Row> rows) {
             this.rows = rows;
@@ -86,29 +86,44 @@ public class Mod {
             { return o instanceof Sample ? equals((Pattern) o) : false; }
 
         public static class Row {
-            private final int sample;
-            private final int period;
-            private final int effect;
+            public final List<Note> notes;
 
-            public Row(int sample, int period, int effect) {
-                this.sample = sample;
-                this.period = period;
-                this.effect = effect;
+            public Row(List<Note> notes) {
+                this.notes = notes;
             }
 
-            public boolean equals(Row that) {
-                return this.sample == that.sample
-                    && this.period == that.period
-                    && this.effect == that.effect;
-            }
+            public boolean equals(Row that)
+                { return this.notes.equals(that.notes); }
 
             public boolean equals(Object o)
-                { return o instanceof Sample ? equals((Row) o) : false; }
+                { return o instanceof Row ? equals((Row) o) : false; }
 
-            public String toString() {
-                return String.format("Row(sample=%d, period=%d, effect=%d)",
-                                     sample, period, effect);
+            public static class Note {
+                public final int sample;
+                public final int period;
+                public final int effect;
+
+                public Note(int sample, int period, int effect) {
+                    this.sample = sample;
+                    this.period = period;
+                    this.effect = effect;
+                }
+
+                public boolean equals(Note that) {
+                    return this.sample == that.sample
+                        && this.period == that.period
+                        && this.effect == that.effect;
+                }
+
+                public boolean equals(Object o)
+                    { return o instanceof Note ? equals((Note) o) : false; }
+
+                public String toString() {
+                    return String.format("Note(sample=%d, period=%d, effect=%d)",
+                                         sample, period, effect);
+                }
             }
+
         }
     }
 }

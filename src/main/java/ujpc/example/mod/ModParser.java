@@ -17,6 +17,7 @@ public class ModParser implements Parser<byte[], Mod> {
     private final static int SAMPLES_COUNT        =  31;
     private final static int TYPE_LENGTH          =   4;
     private final static int PATTERN_TABLE_LENGTH = 128;
+    private final static int NOTES_COUNT          =   4;
     private final static int PATTERN_ROWS_COUNT   =  64;
 
     private static class SampleParser implements Parser<byte[], Mod.Sample> {
@@ -38,14 +39,37 @@ public class ModParser implements Parser<byte[], Mod> {
         }
     }
 
+    private static class NoteParser
+                   implements Parser<byte[], Mod.Pattern.Row.Note> {
+        private final Parser<byte[], Mod.Pattern.Row.Note> parser
+            = new UInt32().map(
+                x -> new Mod.Pattern.Row.Note(
+                    ((x >>> 24) & 0x000000F0) | ((x >>> 12) & 0x0000000F),
+                    (x >>> 16) & 0x00000FFF,
+                    x & 0x0000000F));
+
+        @Override
+        public State<byte[], Mod.Pattern.Row.Note> parse(byte[] in) {
+            return parser.parse(in);
+        }
+    }
+
+    private static class RowParser implements Parser<byte[], Mod.Pattern.Row> {
+        private final Parser<byte[], Mod.Pattern.Row> parser
+            = new Repeat<byte[], Mod.Pattern.Row.Note>(
+                NOTES_COUNT, new NoteParser()).map(x -> new Mod.Pattern.Row(x));
+
+        @Override
+        public State<byte[], Mod.Pattern.Row> parse(byte[] in) {
+            return parser.parse(in);
+        }
+    }
+
     private static class PatternParser implements Parser<byte[], Mod.Pattern> {
         private final Parser<byte[], Mod.Pattern> parser
             = new Repeat<byte[], Mod.Pattern.Row>(
-                PATTERN_ROWS_COUNT, new UInt32().map(
-                x -> new Mod.Pattern.Row(
-                    ((x >>> 24) & 0x000000F0) | ((x >>> 12) & 0x0000000F),
-                    (x >>> 16) & 0x00000FFF,
-                    x & 0x00000FFF))).map(x -> new Mod.Pattern(x));
+                PATTERN_ROWS_COUNT,
+                new RowParser()).map(x -> new Mod.Pattern(x));
 
         @Override
         public State<byte[], Mod.Pattern> parse(byte[] in) {
