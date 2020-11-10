@@ -1,20 +1,13 @@
 package ujpc.parser;
 
-import java.util.List;
 import java.util.function.Function;
 
-public abstract class State<InputT, ResultT> {
+public abstract class State<InputT extends Input<?>, ResultT> {
     private final InputT input;
-    private final int    offset;
 
-    private State(InputT input, int offset) {
-        this.input = input;
-        this.offset = offset;
-    }
+    private State(InputT input) { this.input = input; }
 
-    public          InputT input()  { return input; }
-    public          int    offset() { return offset; }
-    public abstract InputT rest();
+    public InputT input() { return input; }
 
     public abstract <T> T match(Function<Success<InputT, ResultT>, T> success,
                                 Function<Failure<InputT, ResultT>, T> failure);
@@ -25,16 +18,17 @@ public abstract class State<InputT, ResultT> {
     }
 
     protected boolean equals(State that) {
-        return this.input.equals(that.input)
-            && this.offset == that.offset;
+        return this.input.equals(that.input);
     }
 
-    public static abstract class Success<InputT, ResultT>
+    public static class Success<InputT extends Input<?>, ResultT>
     extends State<InputT, ResultT> {
         private final ResultT result;
 
-        public Success(InputT input, int offset, ResultT result) {
-            super(input, offset);
+        public ResultT result() { return result; }
+
+        public Success(InputT input, ResultT result) {
+            super(input);
             this.result = result;
         }
 
@@ -58,12 +52,12 @@ public abstract class State<InputT, ResultT> {
         }
     }
 
-    public final static abstract class Failure<InputT, ResultT>
+    public static class Failure<InputT extends Input<?>, ResultT>
     extends State<InputT, ResultT> {
         private final String error;
 
-        public Failure(InputT input, int offset, String error) {
-            super(input, offset);
+        public Failure(InputT input, String error) {
+            super(input);
             this.error = error;
         }
 
