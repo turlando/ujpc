@@ -4,13 +4,14 @@ import java.util.List;
 
 import ujpc.parser.Parser;
 import ujpc.parser.State;
+import ujpc.parser.Input;
 import static ujpc.util.Lists.append;
 import static ujpc.util.Lists.first;
 import static ujpc.util.Lists.last;
 import static ujpc.util.Lists.rest;
 
-public class Repeat<InputT, ResultT>
-       implements Parser<InputT, List<ResultT>> {
+public class Repeat<InputT extends Input<?>, ResultT>
+implements Parser<InputT, List<ResultT>> {
     private final int count;
     private final Parser<InputT, ResultT> parser;
 
@@ -30,11 +31,13 @@ public class Repeat<InputT, ResultT>
 
         return parser.parse(in)
             .match(success -> new Repeat<InputT, ResultT>(count - 1, parser)
-                                  .parse(success.input,
-                                         success.result == null
+                                  .parse(success.input(),
+                                         success.result() == null
                                          ? acc
-                                         : append(acc, success.result)),
+                                         : append(acc, success.result())),
                    failure -> new State.Failure<InputT, List<ResultT>>(
-                                  failure.error));
+                                  in,
+                                  // TODO improve error message
+                                  failure.error()));
     }
 }
