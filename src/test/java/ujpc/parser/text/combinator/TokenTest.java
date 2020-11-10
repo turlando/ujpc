@@ -1,9 +1,8 @@
-package ujpc.parser.combinator.text;
+package ujpc.parser.text.combinator;
 
 import org.junit.jupiter.api.Test;
-
-import static ujpc.parser.ParserTesting.canParse;
-import static ujpc.parser.ParserTesting.cantParse;
+import static ujpc.parser.text.TextParserTesting.canParse;
+import static ujpc.parser.text.TextParserTesting.cantParse;
 
 public class TokenTest {
     private final static Token PARSER = new Token("test");
