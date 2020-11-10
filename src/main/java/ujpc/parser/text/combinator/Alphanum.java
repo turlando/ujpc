@@ -1,12 +1,9 @@
 package ujpc.parser.text.combinator;
 
-import java.util.regex.Pattern;
 import ujpc.parser.Parser;
 import ujpc.parser.State;
 import ujpc.parser.text.Text;
 import static ujpc.util.Lists.first;
-import static ujpc.util.Strings.take;
-import static ujpc.util.Strings.drop;
 
 public class Alphanum implements Parser<Text, String> {
     private Parser<Text, String> parser

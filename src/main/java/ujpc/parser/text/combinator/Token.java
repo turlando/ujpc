@@ -5,8 +5,6 @@ import ujpc.parser.Parser;
 import ujpc.parser.State;
 import ujpc.parser.text.Text;
 import static ujpc.util.Lists.first;
-import static ujpc.util.Strings.take;
-import static ujpc.util.Strings.drop;
 
 public class Token implements Parser<Text, String> {
     private String target;

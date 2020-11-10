@@ -7,7 +7,6 @@ import java.util.regex.Matcher;
 import ujpc.parser.Parser;
 import ujpc.parser.State;
 import ujpc.parser.text.Text;
-import static ujpc.util.Strings.drop;
 import static ujpc.util.Lists.append;
 
 

@@ -2,7 +2,6 @@ package ujpc.parser.text;
 
 import java.util.List;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 import ujpc.parser.Input;
 import static ujpc.util.Strings.drop;
 import static ujpc.util.Strings.take;
