@@ -1,16 +1,15 @@
 package ujpc.parser.combinator;
 
 import java.util.List;
-
 import ujpc.parser.Parser;
 import ujpc.parser.State;
+import ujpc.parser.Input;
 import static ujpc.util.Lists.append;
 import static ujpc.util.Lists.first;
-import static ujpc.util.Lists.last;
 import static ujpc.util.Lists.rest;
 
-public class Sequence<InputT, ResultT>
-       implements Parser<InputT, List<ResultT>> {
+public class Sequence<InputT extends Input<?>, ResultT>
+implements Parser<InputT, List<ResultT>> {
     private final List<Parser<InputT, ResultT>> parsers;
 
     private Sequence(List<Parser<InputT, ResultT>> parsers) {
@@ -33,11 +32,12 @@ public class Sequence<InputT, ResultT>
 
         return first(parsers).parse(in)
             .match(success -> new Sequence<InputT, ResultT>(rest(parsers))
-                                  .parse(success.input,
-                                         success.result == null
+                                  .parse(success.input(),
+                                         success.result() == null
                                          ? acc
-                                         : append(acc, success.result)),
+                                         : append(acc, success.result())),
                    failure -> new State.Failure<InputT, List<ResultT>>(
+                                  in,
                                   String.format("Expected %s but got \"%s\".",
                                                 first(parsers), in)));
     }

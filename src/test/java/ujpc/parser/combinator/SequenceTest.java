@@ -1,17 +1,16 @@
 package ujpc.parser.combinator;
 
 import org.junit.jupiter.api.Test;
-
-import static ujpc.parser.ParserTesting.canParse;
-import static ujpc.parser.ParserTesting.cantParse;
-
+import static ujpc.parser.text.TextParserTesting.canParse;
+import static ujpc.parser.text.TextParserTesting.cantParse;
 import java.util.List;
-import ujpc.parser.combinator.text.Token;
+import ujpc.parser.text.Text;
+import ujpc.parser.text.combinator.Token;
 
 public class SequenceTest {
     public static class TokenSequenceTest {
-        private final static Sequence<String, String> PARSER
-            = new Sequence<String, String>(
+        private final static Sequence<Text, String> PARSER
+            = new Sequence<>(
                 new Token("hello"),
                 new Token(" "),
                 new Token("world"));
@@ -26,8 +25,8 @@ public class SequenceTest {
     }
 
     public static class IntegerSequenceTest {
-        private final static Sequence<String, Integer> PARSER
-            = new Sequence<String, Integer>(
+        private final static Sequence<Text, Integer> PARSER
+            = new Sequence<>(
                 new Token("42").map(Integer::parseInt),
                 new Token("23").map(Integer::parseInt));
 
