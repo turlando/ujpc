@@ -3,9 +3,7 @@ package ujpc.parser.text;
 import java.util.List;
 import java.util.Arrays;
 import ujpc.parser.Input;
-import static ujpc.util.Strings.drop;
-import static ujpc.util.Strings.take;
-import static ujpc.util.Strings.newlines;
+import ujpc.util.Strings;
 import static ujpc.util.Lists.append;
 import static ujpc.util.Lists.concat;
 import static ujpc.util.Lists.last;
@@ -29,12 +27,14 @@ extends Input<String> {
     public int line()   { return line; }
     public int column() { return column; }
 
-    @Override public String rest() { return drop(input(), offset()); }
+    @Override public String rest()      { return Strings.drop(input(), offset()); }
+    @Override public String take(int n) { return Strings.take(rest(), n); }
+    @Override public String drop(int n) { return Strings.drop(rest(), n); }
 
     @Override
     public Text addOffset(int offset) {
-        final String substring = take(rest(), offset);
-        final int newlines = newlines(substring);
+        final String substring = take(offset);
+        final int newlines = Strings.newlines(substring);
         final int newOffset = offset() + offset;
         final int newLineNumber = line + newlines;
         final int newColumnNumber

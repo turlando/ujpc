@@ -13,7 +13,10 @@ public abstract class Input<T> {
 
     public          T   input()  { return input; }
     public          int offset() { return offset; }
-    public abstract T   rest();
+
+    public abstract T rest();
+    public abstract T take(int n);
+    public abstract T drop(int n);
 
     public abstract Input<T> addOffset(int offset);
 
