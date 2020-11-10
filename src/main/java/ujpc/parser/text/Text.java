@@ -58,14 +58,16 @@ extends Input<String> {
         final int lineNumberLength = line > 0
                                      ? (int) Math.ceil(Math.log10((int) line))
                                      : 1;
+        final int col = column == 0 ? 1 : column;
+
         return String.format(" %" + lineNumberLength + "d | %s\n" +
-                             " %" + lineNumberLength + "s | %" + column + "s",
+                             " %" + lineNumberLength + "s | %" + col + "s",
                              line, lines.get(line).line(),
                              " ", "^");
     }
 
     private static List<Line> stringToLines(String s) {
-        return Arrays.stream(s.split("\n"))
+        return s.lines()
             .reduce(List.<Line> of(),
                     (acc, x) -> append(acc, new Line(x, x.length(),
                                                      acc.isEmpty()
