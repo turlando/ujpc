@@ -3,6 +3,7 @@ package ujpc.example.mod;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.IOException;
+import ujpc.parser.binary.Binary;
 
 public class ModFile {
     public final static ModParser PARSER = new ModParser();
@@ -14,7 +15,7 @@ public class ModFile {
     public ModFile(String path) throws IOException {
         this.path  = path;
         this.bytes = Files.readAllBytes(Paths.get(path));
-        this.mod   = PARSER.parse(bytes).getOrThrow();
+        this.mod   = PARSER.parse(new Binary(bytes)).getOrThrow();
     }
 
     @Override
