@@ -1,11 +1,9 @@
-package ujpc.parser.combinator.text;
-
-import org.junit.jupiter.api.Test;
-
-import static ujpc.parser.ParserTesting.canParse;
-import static ujpc.parser.ParserTesting.cantParse;
+package ujpc.parser.text.combinator;
 
 import java.util.List;
+import org.junit.jupiter.api.Test;
+import static ujpc.parser.text.TextParserTesting.canParse;
+import static ujpc.parser.text.TextParserTesting.cantParse;
 
 public class RegexTest {
     public static class StringRegexTest {
@@ -29,6 +27,6 @@ public class RegexTest {
 
         @Test void failure() {
             cantParse(PARSER, "test42");
-            }
+        }
     }
 }
