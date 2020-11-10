@@ -16,5 +16,7 @@ public abstract class Input<T> {
     public abstract T   rest();
 
     public abstract Input<T> addOffset(int offset);
+
+    public abstract String position();
     public abstract String needle();
 }

@@ -49,6 +49,11 @@ extends Input<String> {
     }
 
     @Override
+    public String position() {
+        return String.format("%d:%d", line(), column());
+    }
+
+    @Override
     public String needle() {
         final int lineNumberLength = line > 0
                                      ? (int) Math.ceil(Math.log10((int) line))
