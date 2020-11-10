@@ -85,42 +85,48 @@ class JsonParserTest {
         }
 
         @Test void singleNull() {
-            canParse(PARSER, "[null]",
-                     new Json.Array(new Json.Null()), "");
+            canParse(
+                PARSER, "[null]",
+                new Json.Array(new Json.Null()), "");
         }
 
         @Test void singleString() {
-            canParse(PARSER, "[\"foo\"]",
-                     new Json.Array(new Json.String("foo")), "");
+            canParse(
+                PARSER, "[\"foo\"]",
+                new Json.Array(new Json.String("foo")), "");
         }
 
         @Test void strings() {
-            canParse(PARSER, "[\"foo\",\"bar\"]",
-                     new Json.Array(new Json.String("foo"),
-                                    new Json.String("bar")),
-                     "");
+            canParse(
+                PARSER, "[\"foo\",\"bar\"]",
+                new Json.Array(new Json.String("foo"),
+                               new Json.String("bar")),
+                "");
         }
 
         @Test void nested() {
-            canParse(PARSER, "[\"foo\",42,[\"foo\",42,[\"foo\",42]]]",
-                     new Json.Array(
+            canParse(
+                PARSER, "[\"foo\",42,[\"foo\",42,[\"foo\",42]]]",
+                new Json.Array(
+                    new Json.String("foo"),
+                    new Json.Number(42),
+                    new Json.Array(
                         new Json.String("foo"),
                         new Json.Number(42),
                         new Json.Array(
                             new Json.String("foo"),
-                            new Json.Number(42),
-                            new Json.Array(
-                                new Json.String("foo"),
-                                new Json.Number(42)))),
-                     "");
+                            new Json.Number(42)))),
+                "");
         }
 
         @Test void spaces() {
-            canParse(PARSER,
-                     "  [  \"foo\"  ,  \"bar\"  ] ",
-                     new Json.Array(new Json.String("foo"),
-                                    new Json.String("bar")),
-                     " ");
+            canParse(
+                PARSER,
+                "  [  \"foo\"  ,  \"bar\"  ] ",
+                new Json.Array(
+                    new Json.String("foo"),
+                    new Json.String("bar")),
+                " ");
         }
     }
 
@@ -131,22 +137,24 @@ class JsonParserTest {
         }
 
         @Test void simple() {
-            canParse(PARSER, "{\"key1\": \"val1\"}",
-                     new Json.Object(Map.of(
-                         new Json.String("key1"), new Json.String("val1"))),
-                     "");
+            canParse(
+                PARSER, "{\"key1\": \"val1\"}",
+                new Json.Object(Map.of(
+                    new Json.String("key1"), new Json.String("val1"))),
+                "");
         }
 
         @Test void heterogeneous() {
-            canParse(PARSER,
-                     "{\"key1\": \"val1\", \"key2\": 42, \"key3\": [23, \"42\"]}",
-                     new Json.Object(Map.of(
-                         new Json.String("key1"), new Json.String("val1"),
-                         new Json.String("key2"), new Json.Number(42),
-                         new Json.String("key3"), new Json.Array(
-                             new Json.Number(23),
-                             new Json.String("42")))),
-                     "");
+            canParse(
+                PARSER,
+                "{\"key1\": \"val1\", \"key2\": 42, \"key3\": [23, \"42\"]}",
+                new Json.Object(Map.of(
+                    new Json.String("key1"), new Json.String("val1"),
+                    new Json.String("key2"), new Json.Number(42),
+                    new Json.String("key3"), new Json.Array(
+                        new Json.Number(23),
+                        new Json.String("42")))),
+                "");
         }
     }
 }
