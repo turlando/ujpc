@@ -2,9 +2,8 @@ package ujpc.example.json;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
-import static ujpc.parser.ParserTesting.canParse;
-import static ujpc.parser.ParserTesting.cantParse;
+import static ujpc.parser.text.TextParserTesting.canParse;
+import static ujpc.parser.text.TextParserTesting.cantParse;
 
 import java.util.List;
 import java.util.Map;

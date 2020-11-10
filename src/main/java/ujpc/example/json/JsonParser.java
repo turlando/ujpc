@@ -3,23 +3,24 @@ package ujpc.example.json;
 import java.util.stream.Collectors;
 import ujpc.parser.Parser;
 import ujpc.parser.State;
+import ujpc.parser.text.Text;
 import ujpc.parser.combinator.Sequence;
 import ujpc.parser.combinator.Choice;
 import ujpc.parser.combinator.Optional;
-import ujpc.parser.combinator.text.Token;
-import ujpc.parser.combinator.text.Regex;
-import ujpc.parser.combinator.text.Between;
-import ujpc.parser.combinator.text.Separated;
-import ujpc.parser.combinator.text.WhitespaceConsumer;
+import ujpc.parser.text.combinator.Token;
+import ujpc.parser.text.combinator.Regex;
+import ujpc.parser.text.combinator.Between;
+import ujpc.parser.text.combinator.Separated;
+import ujpc.parser.text.combinator.WhitespaceConsumer;
 import static ujpc.util.Lists.first;
 import static ujpc.util.Maps.merge;
 
 import java.util.List;
 import java.util.Map;
 
-public class JsonParser implements Parser<String, Json> {
-    private Parser<String, Json> parser
-        = new Choice<String, Json>(
+public class JsonParser implements Parser<Text, Json> {
+    private Parser<Text, Json> parser
+        = new Choice<Text, Json>(
             new NullParser(),
             new BooleanParser(),
             new NumberParser(),
@@ -27,69 +28,69 @@ public class JsonParser implements Parser<String, Json> {
             new ArrayParser(),
             new ObjectParser());
 
-    public static class NullParser implements Parser<String, Json> {
-        private Parser<String, Json> parser
+    public static class NullParser implements Parser<Text, Json> {
+        private Parser<Text, Json> parser
             = new Token("null").map(x -> new Json.Null());
 
         @Override
-        public State<String, Json> parse(String in) {
+        public State<Text, Json> parse(Text in) {
             return new WhitespaceConsumer<Json>(parser).parse(in);
         }
 
         public String toString() { return "JsonParser.NullParser()"; }
     }
 
-    public static class BooleanParser implements Parser<String, Json> {
-        private Parser<String, Json> parser
-            = new Choice<String, Json>(
+    public static class BooleanParser implements Parser<Text, Json> {
+        private Parser<Text, Json> parser
+            = new Choice<Text, Json>(
                 new Token("true").map(x -> new Json.Boolean(true)),
                 new Token("false").map(x -> new Json.Boolean(false)));
 
         @Override
-        public State<String, Json> parse(String in) {
+        public State<Text, Json> parse(Text in) {
             return new WhitespaceConsumer<Json>(parser).parse(in);
         }
 
         public String toString() { return "JsonParser.BooleanParser()"; }
     }
 
-    public static class NumberParser implements Parser<String, Json> {
-        private Parser<String, Json> parser
+    public static class NumberParser implements Parser<Text, Json> {
+        private Parser<Text, Json> parser
             = new Regex("(-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?)")
                   .map(x -> new Json.Number(Double.valueOf(first(x))));
 
         @Override
-        public State<String, Json> parse(String in) {
+        public State<Text, Json> parse(Text in) {
             return new WhitespaceConsumer<Json>(parser).parse(in);
         }
 
         public String toString() { return "JsonParser.NumberParser()"; }
     }
 
-    private static class StringParser implements Parser<String, Json> {
-        private Parser<String, Json> parser
+    private static class StringParser implements Parser<Text, Json> {
+        private Parser<Text, Json> parser
             = new Between<String>(
                new Token("\""),
                new Token("\""),
-                new Optional<String, String>(
+                new Optional<Text, String>(
                     new Regex("([^\"]+)").map(x -> first(x)),
                     ""))
               .map(x -> new Json.String(x));
 
         @Override
-        public State<String, Json> parse(String in) {
+        public State<Text, Json> parse(Text in) {
             return new WhitespaceConsumer<Json>(parser).parse(in);
         }
 
         public String toString() { return "JsonParser.StringParser()"; }
     }
 
-    private class ArrayParser implements Parser<String, Json> {
-        private Parser<String, Json> parser
+    private class ArrayParser implements Parser<Text, Json> {
+        private Parser<Text, Json> parser
             = new Between<Json>(
                 new WhitespaceConsumer<String>(new Token("[")),
                 new WhitespaceConsumer<String>(new Token("]")),
-                new Optional<String, Json>(
+                new Optional<Text, Json>(
                     new Separated<Json>(
                         new WhitespaceConsumer<String>(new Token(",")),
                         new WhitespaceConsumer<Json>(JsonParser.this))
@@ -97,22 +98,22 @@ public class JsonParser implements Parser<String, Json> {
                     new Json.Array()));
 
         @Override
-        public State<String, Json> parse(String in) {
+        public State<Text, Json> parse(Text in) {
             return parser.parse(in);
         }
 
         public String toString() { return "JsonParser.ArrayParser()"; }
     }
 
-    private class ObjectParser implements Parser<String, Json> {
-        private Parser<String, Json> parser
+    private class ObjectParser implements Parser<Text, Json> {
+        private Parser<Text, Json> parser
             = new Between<Json>(
                 new WhitespaceConsumer<String>(new Token("{")),
                 new WhitespaceConsumer<String>(new Token("}")),
-                new Optional<String, Json>(
+                new Optional<Text, Json>(
                     new Separated<Map<Json, Json>>(
                         new WhitespaceConsumer<String>(new Token(",")),
-                        new Sequence<String, Json>(
+                        new Sequence<Text, Json>(
                             new StringParser(),
                             new WhitespaceConsumer<String>(
                                 new Token(":")).map(x -> null),
@@ -122,7 +123,7 @@ public class JsonParser implements Parser<String, Json> {
                     new Json.Object()));
 
         @Override
-        public State<String, Json> parse(String in) {
+        public State<Text, Json> parse(Text in) {
             return parser.parse(in);
         }
 
@@ -130,7 +131,7 @@ public class JsonParser implements Parser<String, Json> {
     }
 
     @Override
-    public State<String, Json> parse(String in) {
+    public State<Text, Json> parse(Text in) {
         return parser.parse(in);
     }
 }

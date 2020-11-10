@@ -1,5 +1,7 @@
 package ujpc.example.json;
 
+import ujpc.parser.text.Text;
+
 public class Main {
     private static final String COMMAND
         = System.getProperty("sun.java.command");
@@ -19,7 +21,7 @@ public class Main {
             System.exit(1);
         }
 
-        final Json result = PARSER.parse(args[0]).getOrThrow();
+        final Json result = PARSER.parse(new Text(args[0])).getOrThrow();
 
         System.out.println(result);
     }
