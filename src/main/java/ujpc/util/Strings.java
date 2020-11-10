@@ -13,4 +13,10 @@ public final class Strings {
             return "";
         return s.substring(n, s.length());
     }
+
+    /** Return the number of newlines in given string.
+     */
+    public static int newlines(String s) {
+        return s.length() - s.replace("\n", "").length();
+    }
 }
