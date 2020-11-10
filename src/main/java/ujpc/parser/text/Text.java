@@ -43,9 +43,9 @@ extends Input<String> {
 
         return new Text(
             input(), newOffset,  // input pass-thru, offset update
-            lines,             // lines pass-thru
-            newLineNumber,     // line number update
-            newColumnNumber);  // column number update
+            lines,               // lines pass-thru
+            newLineNumber,       // line number update
+            newColumnNumber);    // column number update
     }
 
     @Override
