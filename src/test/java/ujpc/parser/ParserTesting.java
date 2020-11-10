@@ -1,6 +1,7 @@
 package ujpc.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class ParserTesting {
     private ParserTesting() {}
@@ -9,11 +10,10 @@ public class ParserTesting {
     void canParse(Parser<InputT, ResultT> parser, InputT input,
                   ResultT expectedResult, InputV expectedLeftover) {
         final State<InputT, ResultT> state    = parser.parse(input);
-        final ResultT                result   = state.getOrThrow();
-        final InputV                 leftover = state.input().rest();
+        assertEquals(expectedLeftover, state.input().rest());
 
-        assertEquals(expectedResult, result);
-        assertEquals(expectedLeftover, leftover);
+        try   { assertEquals(expectedResult, state.getOrThrow()); }
+        catch (ParserException e) { fail(e); }
     }
 
     public static <InputT extends Input<?>, ResultT>
