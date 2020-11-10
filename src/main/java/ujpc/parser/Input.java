@@ -1,8 +1,8 @@
 package ujpc.parser;
 
 public abstract class Input<T> {
-    protected final T   input;
-    protected final int offset;
+    private final T   input;
+    private final int offset;
 
     public Input(T input, int offset) {
         this.input  = input;

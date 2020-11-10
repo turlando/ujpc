@@ -29,20 +29,20 @@ extends Input<String> {
     public int line()   { return line; }
     public int column() { return column; }
 
-    @Override public String rest() { return drop(input, offset); }
+    @Override public String rest() { return drop(input(), offset()); }
 
     @Override
     public Text addOffset(int offset) {
         final String substring = take(rest(), offset);
         final int newlines = newlines(substring);
-        final int newOffset = this.offset + offset;
+        final int newOffset = offset() + offset;
         final int newLineNumber = line + newlines;
         final int newColumnNumber
             // update column as the difference between offset and start of line
             = newOffset - lines.get(newLineNumber).offset();
 
         return new Text(
-            input, newOffset,  // input pass-thru, offset update
+            input(), newOffset,  // input pass-thru, offset update
             lines,             // lines pass-thru
             newLineNumber,     // line number update
             newColumnNumber);  // column number update
