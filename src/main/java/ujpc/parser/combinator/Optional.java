@@ -2,9 +2,10 @@ package ujpc.parser.combinator;
 
 import ujpc.parser.State;
 import ujpc.parser.Parser;
+import ujpc.parser.Input;
 
-public class Optional<InputT, ResultT>
-       implements Parser<InputT, ResultT> {
+public class Optional<InputT extends Input<?>, ResultT>
+implements Parser<InputT, ResultT> {
     private final Parser<InputT, ResultT> parser;
     private final ResultT otherwise;
 
