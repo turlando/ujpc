@@ -11,36 +11,38 @@ import static ujpc.util.Lists.append;
 public class Choice<InputT extends Input<?>, ResultT>
 implements Parser<InputT, ResultT> {
     private final List<Parser<InputT, ResultT>> parsers;
-    private final List<Parser<InputT, ResultT>> failedParsers;
-
-    private Choice(List<Parser<InputT, ResultT>> parsers,
-                   List<Parser<InputT, ResultT>> failedParsers) {
-        this.parsers = parsers;
-        this.failedParsers = failedParsers;
-    }
 
     private Choice(List<Parser<InputT, ResultT>> parsers) {
-        this(parsers, List.of());
+        this.parsers = parsers;
     }
 
     @SafeVarargs
     public Choice(Parser<InputT, ResultT>... parsers) {
-        this(List.of(parsers), List.of());
+        this(List.of(parsers));
+    }
+
+    public State<InputT, ResultT> parse(InputT in,
+                                       List<Parser<InputT, ResultT>> parsersToTry,
+                                       State.Failure<InputT, ResultT> bestState) {
+        if (parsersToTry.isEmpty())
+            return new State.Failure<InputT, ResultT>(
+                bestState.input(),
+                String.format("Could not match any of %s. Best clue: %s",
+                              parsers, bestState.error()));
+        else
+            return first(parsersToTry).parse(in)
+                .match(success -> success,
+                       failure -> parse(
+                           in,
+                           rest(parsersToTry),
+                           failure.input().offset() > bestState.input().offset()
+                           ? failure
+                           : bestState));
     }
 
     @Override
     public State<InputT, ResultT> parse(InputT in) {
-        if (parsers.isEmpty())
-            return new State.Failure<InputT, ResultT>(
-                in,
-                String.format("Could not match any of %s.", failedParsers));
-
-        return first(parsers).parse(in)
-            .match(success -> success,
-                   failure -> new Choice<InputT, ResultT>(
-                                  rest(parsers),
-                                  append(failedParsers, first(parsers)))
-                                  .parse(in));
+        return parse(in, parsers, new State.Failure<InputT, ResultT>(in, null));
     }
 
     public String toString() {
