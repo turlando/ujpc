@@ -1,15 +1,15 @@
 package ujpc.parser.combinator;
 
 import java.util.List;
-
 import ujpc.parser.Parser;
 import ujpc.parser.State;
+import ujpc.parser.Input;
 import static ujpc.util.Lists.first;
 import static ujpc.util.Lists.rest;
 import static ujpc.util.Lists.append;
 
-public class Choice<InputT, ResultT>
-       implements Parser<InputT, ResultT> {
+public class Choice<InputT extends Input<?>, ResultT>
+implements Parser<InputT, ResultT> {
     private final List<Parser<InputT, ResultT>> parsers;
     private final List<Parser<InputT, ResultT>> failedParsers;
 
@@ -32,6 +32,7 @@ public class Choice<InputT, ResultT>
     public State<InputT, ResultT> parse(InputT in) {
         if (parsers.isEmpty())
             return new State.Failure<InputT, ResultT>(
+                in,
                 String.format("Could not match any of %s.", failedParsers));
 
         return first(parsers).parse(in)

@@ -1,15 +1,14 @@
 package ujpc.parser.combinator;
 
 import org.junit.jupiter.api.Test;
-
-import static ujpc.parser.ParserTesting.canParse;
-import static ujpc.parser.ParserTesting.cantParse;
-
-import ujpc.parser.combinator.text.Token;
+import static ujpc.parser.text.TextParserTesting.canParse;
+import static ujpc.parser.text.TextParserTesting.cantParse;
+import ujpc.parser.text.Text;
+import ujpc.parser.text.combinator.Token;
 
 public class ChoiceTest {
     public static class TokenChoiceTest {
-        private final static Choice<String, String> PARSER
+        private final static Choice<Text, String> PARSER
             = new Choice<>(
                 new Token("foo"),
                 new Token("bar"),
