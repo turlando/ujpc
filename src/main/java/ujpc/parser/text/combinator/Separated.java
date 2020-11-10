@@ -31,7 +31,8 @@ public class Separated<ResultT> implements Parser<Text, List<ResultT>> {
                 sepFailure -> new State.Success<>(
                                   elSuccess.input(),
                                   append(acc, elSuccess.result()))),
-            elFailure -> new State.Failure<>(in, elFailure.error()));
+            elFailure -> new State.Failure<>(elFailure.input(),
+                                             elFailure.error()));
     }
 
     public String toString() {
