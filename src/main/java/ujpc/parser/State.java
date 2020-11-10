@@ -12,9 +12,13 @@ public abstract class State<InputT extends Input<?>, ResultT> {
     public abstract <T> T match(Function<Success<InputT, ResultT>, T> success,
                                 Function<Failure<InputT, ResultT>, T> failure);
 
-    public ResultT getOrThrow() {
-        return match(success -> success.result(),
-                     failure -> { throw new RuntimeException(failure.error); });
+    public ResultT getOrThrow() throws ParserException {
+        ResultT result = match(success -> success.result(),
+                               failure -> null);
+        if (result == null)
+            throw new ParserException(match(s -> null, f -> f));
+        else
+            return result;
     }
 
     protected boolean equals(State that) {
