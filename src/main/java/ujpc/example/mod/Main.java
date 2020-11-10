@@ -1,5 +1,7 @@
 package ujpc.example.mod;
 
+import ujpc.parser.ParserException;
+
 public class Main {
     private static final String COMMAND
         = System.getProperty("sun.java.command");
@@ -58,6 +60,8 @@ public class Main {
         } catch (java.io.IOException e) {
             System.err.println(e);
             System.exit(1);
+        } catch (ParserException e) {
+            System.err.println(e.error());
         }
 
         printInfo(file.mod);
