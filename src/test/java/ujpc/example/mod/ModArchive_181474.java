@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
+import ujpc.parser.binary.Binary;
+
 
 public class ModArchive_181474 {
     private final static ModParser PARSER = new ModParser();
@@ -69,9 +71,9 @@ public class ModArchive_181474 {
     public ModArchive_181474() throws java.io.IOException {
         this.content = getClass().getResourceAsStream(FILE_NAME)
                                  .readAllBytes();
-        this.result = PARSER.parse(content)
-                             .match(s -> s.result,
-                                    f -> fail(f.error));
+        this.result = PARSER.parse(new Binary(content))
+                             .match(s -> s.result(),
+                                    f -> fail(f.error()));
     }
 
     @Test void parseTitle() {

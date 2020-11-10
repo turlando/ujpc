@@ -21,4 +21,6 @@ public class WhitespaceConsumer<ResultT> implements Parser<Text, ResultT> {
         .map(x -> first(x))
         .parse(in);
     }
+
+    public String toString() { return parser.toString(); }
 }

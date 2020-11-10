@@ -17,6 +17,8 @@ public interface Parser<InputT extends Input<?>, ResultT> {
                     failure -> new State.Failure<InputT, NewT>(
                                    failure.input(), failure.error()));
             }
+
+            public String toString() { return Parser.this.toString(); }
         };
     }
 
@@ -26,10 +28,13 @@ public interface Parser<InputT extends Input<?>, ResultT> {
             @Override
             public State<InputT, NewT> parse(InputT in) {
                 return Parser.this.parse(in).match(
-                    success -> fn.apply(success.result()).parse(success.input()),
+                    success -> fn.apply(success.result())
+                                 .parse(success.input()),
                     failure -> new State.Failure<InputT, NewT>(
                                    failure.input(), failure.error()));
             }
+
+            public String toString() { return Parser.this.toString(); }
         };
     }
 }
