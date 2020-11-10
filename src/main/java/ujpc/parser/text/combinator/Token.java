@@ -25,7 +25,7 @@ public class Token implements Parser<Text, String> {
             success -> success,
             failure -> new State.Failure<>(
                            in,
-                           String.format("Expected token: \"%s\".", target)));
+                           String.format("Expected token: %s.", target)));
     }
 
     @Override
