@@ -11,21 +11,21 @@ import static ujpc.util.Lists.last;
 public class Text
 extends Input<String> {
     private final List<Line> lines;
-    private final int line;
-    private final int column;
+    private final int lineOffset;
+    private final int columnOffset;
 
     private Text(String input, int offset,
-                 List<Line> lines, int line, int column) {
+                 List<Line> lines, int lineOffset, int columnOffset) {
         super(input, offset);
         this.lines = lines;
-        this.line = line;
-        this.column = column;
+        this.lineOffset = lineOffset;
+        this.columnOffset = columnOffset;
     }
 
     public Text(String input) { this(input, 0, stringToLines(input), 0, 0); }
 
-    public int line()   { return line; }
-    public int column() { return column; }
+    public int line()   { return lineOffset + 1; }    // 1-based indexing for
+    public int column() { return columnOffset + 1; }  // human-friendliness
 
     @Override public String rest()      { return Strings.drop(input(), offset()); }
     @Override public String take(int n) { return Strings.take(rest(), n); }
@@ -36,16 +36,16 @@ extends Input<String> {
         final String substring = take(offset);
         final int newlines = Strings.newlines(substring);
         final int newOffset = offset() + offset;
-        final int newLineNumber = line + newlines;
-        final int newColumnNumber
+        final int newLineOffset = lineOffset + newlines;
+        final int newColumnOffset
             // update column as the difference between offset and start of line
-            = newOffset - lines.get(newLineNumber).offset();
+            = newOffset - lines.get(newLineOffset).offset();
 
         return new Text(
             input(), newOffset,  // input pass-thru, offset update
             lines,               // lines pass-thru
-            newLineNumber,       // line number update
-            newColumnNumber);    // column number update
+            newLineOffset,       // line number update
+            newColumnOffset);    // column number update
     }
 
     @Override
@@ -55,14 +55,13 @@ extends Input<String> {
 
     @Override
     public String needle() {
-        final int lineNumberLength = line > 0
-                                     ? (int) Math.ceil(Math.log10((int) line))
+        final int lineNumberLength = line() > 1
+                                     ? (int) Math.ceil(Math.log10((int) line()))
                                      : 1;
-        final int col = column == 0 ? 1 : column;
 
         return String.format(" %" + lineNumberLength + "d | %s\n" +
-                             " %" + lineNumberLength + "s | %" + col + "s",
-                             line, lines.get(line).line(),
+                             " %" + lineNumberLength + "s | %" + column() + "s",
+                             line(), lines.get(lineOffset).line(),
                              " ", "^");
     }
 
