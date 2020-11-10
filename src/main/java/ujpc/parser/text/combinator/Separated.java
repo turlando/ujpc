@@ -29,7 +29,7 @@ public class Separated<ResultT> implements Parser<Text, List<ResultT>> {
                                     ? acc
                                     : append(acc, elSuccess.result())),
                 sepFailure -> new State.Success<>(
-                                  elSuccess.input(),
+                                  sepFailure.input(),
                                   append(acc, elSuccess.result()))),
             elFailure -> new State.Failure<>(elFailure.input(),
                                              elFailure.error()));
