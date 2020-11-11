@@ -52,7 +52,7 @@ public abstract class State<InputT extends Input<?>, ResultT> {
         }
 
         public String toString() {
-            return String.format("Success(result=%s)", result);
+            return String.format("Success(%s)", result);
         }
     }
 

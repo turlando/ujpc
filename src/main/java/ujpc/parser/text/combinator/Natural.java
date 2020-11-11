@@ -17,7 +17,9 @@ public class Natural implements Parser<Text, String> {
 
         return result.match(
             success -> success,
-            failure -> new State.Failure<>(in, "Expected: natural number"));
+            failure -> new State.Failure<>(
+                in,
+                String.format("Expected: %s", toString())));
     }
 
     @Override
