@@ -17,8 +17,9 @@ implements Parser<InputT, ResultT> {
 
     @Override
     public State<InputT, ResultT> parse(InputT in) {
-        return parser.parse(in)
-            .match(success -> success,
-                   failure -> new State.Success<InputT, ResultT>(in, otherwise));
+        return new Choice<>(
+            parser,
+            new Void<InputT, ResultT>().map(x -> otherwise))
+        .parse(in);
     }
 }
