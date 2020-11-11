@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 import ujpc.parser.Parser;
 import ujpc.parser.State;
 import ujpc.parser.text.Text;
+import static ujpc.util.Strings.getCommonPrefix;
 import static ujpc.util.Lists.first;
 
 public class Token implements Parser<Text, String> {
@@ -23,13 +24,22 @@ public class Token implements Parser<Text, String> {
 
         return result.match(
             success -> success,
-            failure -> new State.Failure<>(
-                           in,
-                           String.format("Expected token: %s.", target)));
+            failure -> {
+                String common = getCommonPrefix(new String[] {target, in.rest()});
+                if (common == null)
+                    return new State.Failure<>(
+                        in,
+                        String.format("Expected: %s", target));
+                    else
+                        return new State.Failure<>(
+                            in.addOffset(common.length()),
+                            String.format("Expected %s, found %s",
+                                          target, in.take(target.length())));
+            });
     }
 
     @Override
     public String toString() {
-        return String.format("Token(\"%s\")", target);
+        return String.format("Token(%s)", target);
     }
 }
