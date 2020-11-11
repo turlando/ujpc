@@ -17,11 +17,11 @@ public class Natural implements Parser<Text, String> {
 
         return result.match(
             success -> success,
-            failure -> new State.Failure<>(in, "Expected natural number"));
+            failure -> new State.Failure<>(in, "Expected: natural number"));
     }
 
     @Override
     public String toString() {
-        return "Natural()";
+        return "natural number";
     }
 }

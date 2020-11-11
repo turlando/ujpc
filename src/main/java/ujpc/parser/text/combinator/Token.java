@@ -40,6 +40,6 @@ public class Token implements Parser<Text, String> {
 
     @Override
     public String toString() {
-        return String.format("Token(%s)", target);
+        return target;
     }
 }

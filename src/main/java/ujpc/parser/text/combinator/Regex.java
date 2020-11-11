@@ -27,7 +27,7 @@ public class Regex implements Parser<Text, List<String>> {
         else
             return new State.Failure<>(
                 in,
-                String.format("Expected pattern: %s", target));
+                String.format("Expected: %s", toString()));
     }
 
     @Override

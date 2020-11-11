@@ -12,6 +12,6 @@ implements Parser<InputT, ResultT> {
     }
 
     public String toString() {
-        return String.format("Void()");
+        return String.format("nothing");
     }
 }

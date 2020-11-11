@@ -36,7 +36,7 @@ public class Separated<ResultT> implements Parser<Text, List<ResultT>> {
     }
 
     public String toString() {
-        return String.format("Separated(by=%s, %s)",
-                             separatorParser, parser);
+        return String.format("%s separated by %s",
+                             parser, separatorParser);
     }
 }

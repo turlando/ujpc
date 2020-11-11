@@ -29,10 +29,7 @@ implements Parser<InputT, ResultT> {
             return new State.Failure<InputT, ResultT>(
                 bestState.input(),
                 bestState.error() == null
-                ? String.format("Expected: %s",
-                                String.join(" or ",
-                                            parsers.stream().map(x -> x.toString())
-                                            .collect(Collectors.toList())))
+                ? String.format("Expected: %s", toString())
                 : bestState.error());
         else
             return first(parsersToTry).parse(in)
@@ -52,6 +49,9 @@ implements Parser<InputT, ResultT> {
     }
 
     public String toString() {
-        return String.format("Choice(%s)", parsers);
+        return String.join(
+            " or ",
+            parsers.stream().map(x -> x.toString())
+                   .collect(Collectors.toList()));
     }
 }

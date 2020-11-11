@@ -1,5 +1,7 @@
 package ujpc.example.json;
 
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import ujpc.parser.Parser;
 import ujpc.parser.State;
@@ -14,9 +16,6 @@ import ujpc.parser.text.combinator.Separated;
 import ujpc.parser.text.combinator.WhitespaceConsumer;
 import static ujpc.util.Lists.first;
 import static ujpc.util.Maps.merge;
-
-import java.util.List;
-import java.util.Map;
 
 public class JsonParser implements Parser<Text, Json> {
     private Parser<Text, Json> parser
@@ -37,7 +36,7 @@ public class JsonParser implements Parser<Text, Json> {
             return new WhitespaceConsumer<Json>(parser).parse(in);
         }
 
-        public String toString() { return "JsonParser.NullParser()"; }
+        public String toString() { return "null"; }
     }
 
     public static class BooleanParser implements Parser<Text, Json> {
@@ -51,7 +50,7 @@ public class JsonParser implements Parser<Text, Json> {
             return new WhitespaceConsumer<Json>(parser).parse(in);
         }
 
-        public String toString() { return "JsonParser.BooleanParser()"; }
+        public String toString() { return "boolean"; }
     }
 
     public static class NumberParser implements Parser<Text, Json> {
@@ -64,7 +63,7 @@ public class JsonParser implements Parser<Text, Json> {
             return new WhitespaceConsumer<Json>(parser).parse(in);
         }
 
-        public String toString() { return "JsonParser.NumberParser()"; }
+        public String toString() { return "number"; }
     }
 
     private static class StringParser implements Parser<Text, Json> {
@@ -82,7 +81,7 @@ public class JsonParser implements Parser<Text, Json> {
             return new WhitespaceConsumer<Json>(parser).parse(in);
         }
 
-        public String toString() { return "JsonParser.StringParser()"; }
+        public String toString() { return "string"; }
     }
 
     private class ArrayParser implements Parser<Text, Json> {
@@ -94,7 +93,7 @@ public class JsonParser implements Parser<Text, Json> {
                     new Separated<Json>(
                         new WhitespaceConsumer<String>(new Token(",")),
                         new WhitespaceConsumer<Json>(JsonParser.this))
-                        .map(x -> new Json.Array(x)),
+                    .map(x -> new Json.Array(x)),
                     new Json.Array()));
 
         @Override
@@ -102,7 +101,7 @@ public class JsonParser implements Parser<Text, Json> {
             return parser.parse(in);
         }
 
-        public String toString() { return "JsonParser.ArrayParser()"; }
+        public String toString() { return "array"; }
     }
 
     private class ObjectParser implements Parser<Text, Json> {
@@ -127,7 +126,7 @@ public class JsonParser implements Parser<Text, Json> {
             return parser.parse(in);
         }
 
-        public String toString() { return "JsonParser.ObjectParser()"; }
+        public String toString() { return "object"; }
     }
 
     @Override

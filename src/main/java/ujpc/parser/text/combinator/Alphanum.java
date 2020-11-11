@@ -17,11 +17,11 @@ public class Alphanum implements Parser<Text, String> {
             success -> success,
             failure -> new State.Failure<>(
                 in,
-                "Expected alphanumeric string"));
+                String.format("Expected: %s", toString())));
     }
 
     @Override
     public String toString() {
-        return "Alphanum()";
+        return "alphanumeric string";
     }
 }

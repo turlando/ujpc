@@ -14,4 +14,6 @@ public class Whitespace implements Parser<Text, String> {
     public State<Text, String> parse(Text in) {
         return parser.parse(in);
     }
+
+    public String toString() { return "whitespace"; }
 }

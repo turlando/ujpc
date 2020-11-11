@@ -37,8 +37,7 @@ implements Parser<InputT, List<ResultT>> {
                                          ? acc
                                          : append(acc, success.result())),
                    failure -> new State.Failure<InputT, List<ResultT>>(
-                                  in,
-                                  String.format("Expected %s",
-                                                first(parsers))));
+                                  failure.input(),
+                                  String.format("%s", failure.error())));
     }
 }
