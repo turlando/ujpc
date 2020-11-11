@@ -1,6 +1,7 @@
 package ujpc.parser.combinator;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import ujpc.parser.Parser;
 import ujpc.parser.State;
 import ujpc.parser.Input;
@@ -27,15 +28,20 @@ implements Parser<InputT, ResultT> {
         if (parsersToTry.isEmpty())
             return new State.Failure<InputT, ResultT>(
                 bestState.input(),
-                String.format("Could not match any of %s. Best clue: %s",
-                              parsers, bestState.error()));
+                bestState.error() == null
+                ? String.format("Expected: %s",
+                                String.join(" or ",
+                                            parsers.stream().map(x -> x.toString())
+                                            .collect(Collectors.toList())))
+                : bestState.error());
         else
             return first(parsersToTry).parse(in)
                 .match(success -> success,
                        failure -> parse(
                            in,
                            rest(parsersToTry),
-                           failure.input().offset() > bestState.input().offset()
+                           bestState == null || failure.input().offset()
+                                                > bestState.input().offset()
                            ? failure
                            : bestState));
     }
