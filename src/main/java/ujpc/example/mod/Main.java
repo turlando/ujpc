@@ -53,17 +53,17 @@ public class Main {
         }
 
         String path = args[0];
-        ModFile file = null;
+        ModFile file = new ModFile(path);
 
         try {
-            file = new ModFile(path);
+            final Mod result = file.parse();
+            printInfo(result);
         } catch (java.io.IOException e) {
             System.err.println(e);
             System.exit(1);
         } catch (ParserException e) {
             System.err.println(e.error());
+            System.exit(1);
         }
-
-        printInfo(file.mod);
     }
 }
