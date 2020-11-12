@@ -38,7 +38,7 @@ extends Input<String> {
         final int newOffset = offset() + offset;
         final int newLineOffset = lineOffset + newlines;
         final int newColumnOffset
-            // update column as the difference between offset and start of line
+            // Update column as the difference between offset and start of line.
             = newOffset - lines.get(newLineOffset).offset();
 
         return new Text(
@@ -68,11 +68,15 @@ extends Input<String> {
     private static List<Line> stringToLines(String s) {
         return s.lines()
             .reduce(List.<Line> of(),
-                    (acc, x) -> append(acc, new Line(x, x.length(),
-                                                     acc.isEmpty()
-                                                     ? 0
-                                                     : last(acc).offset()
-                                                       + x.length())),
+                    (acc, x) -> append(
+                        acc,
+                        new Line(x,
+                                 x.length() + 1, // + 1 required because lines()
+                                                 // strips trailing \n
+                                 acc.isEmpty()
+                                 ? 0
+                                 : last(acc).offset()
+                                   + last(acc).length())),
                     (x, y) -> concat(x, y));
     }
 
