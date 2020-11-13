@@ -4,13 +4,12 @@ import java.util.List;
 import ujpc.parser.Parser;
 import ujpc.parser.State;
 import ujpc.parser.text.Text;
+import ujpc.parser.combinator.Sequence;
+import ujpc.parser.combinator.Choice;
 import ujpc.parser.text.combinator.Alphanum;
 import ujpc.parser.text.combinator.Token;
-import ujpc.parser.combinator.Sequence;
 import ujpc.parser.text.combinator.Separated;
 import ujpc.parser.text.combinator.WhitespaceConsumer;
-import ujpc.parser.combinator.Choice;
-import ujpc.example.cbse2011.Workflow.Statement;
 
 public class WorkflowParser implements Parser<Text, Workflow> {
     private final Token begin     = new Token("begin");
