@@ -22,9 +22,9 @@ implements Parser<InputT, ResultT> {
         this(List.of(parsers));
     }
 
-    public State<InputT, ResultT> parse(InputT in,
-                                       List<Parser<InputT, ResultT>> parsersToTry,
-                                       State.Failure<InputT, ResultT> bestState) {
+    private State<InputT, ResultT>parse(InputT in,
+                                        List<Parser<InputT, ResultT>> parsersToTry,
+                                        State.Failure<InputT, ResultT> bestState) {
         if (parsersToTry.isEmpty())
             return new State.Failure<InputT, ResultT>(
                 bestState.input(),
