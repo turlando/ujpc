@@ -5,7 +5,7 @@ import ujpc.parser.binary.BinaryFile;
 import ujpc.parser.ParserException;
 
 public class ModFile extends BinaryFile<Mod> {
-    public final static ModParser PARSER = new ModParser();
+    private final static ModParser PARSER = new ModParser();
 
     public ModFile(String path) {
         super(PARSER, path);

@@ -15,7 +15,7 @@ public class TextFile<ResultT> extends InputFile<Text, ResultT> {
 
     @Override
     protected Text readFile() throws IOException {
-        final String buffer = Files.readString(Paths.get(path));
+        final String buffer = Files.readString(Paths.get(path()));
         return new Text(buffer);
     }
 }

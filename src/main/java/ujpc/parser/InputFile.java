@@ -3,13 +3,16 @@ package ujpc.parser;
 import java.io.IOException;
 
 public abstract class InputFile<InputT extends Input<?>, ResultT> {
-    protected final Parser<InputT, ResultT> parser;
-    protected final String                  path;
+    private final Parser<InputT, ResultT> parser;
+    private final String                  path;
 
     protected InputFile(Parser<InputT, ResultT> parser, String path) {
         this.parser = parser;
         this.path   = path;
     }
+
+    protected Parser<InputT, ResultT> parser() { return parser; }
+    protected String                  path()   { return path; }
 
     protected abstract InputT readFile() throws IOException;
 

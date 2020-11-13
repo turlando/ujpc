@@ -15,7 +15,7 @@ public class BinaryFile<ResultT> extends InputFile<Binary, ResultT> {
 
     @Override
     protected Binary readFile() throws IOException {
-        final byte[] buffer = Files.readAllBytes(Paths.get(path));
+        final byte[] buffer = Files.readAllBytes(Paths.get(path()));
         return new Binary(buffer);
     }
 }
