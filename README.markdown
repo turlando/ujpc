@@ -28,6 +28,10 @@ Currently available examples:
 
 * `json`: JSON parser
 * `mod`: Amiga tracker module (31 instruments) parser
+* `cbse2011`: Loose implementation of the grammar described in
+   [this paper][cbse2011]
+
+[cbse2011]: https://spiral.imperial.ac.uk/bitstream/10044/1/33728/2/2011-cbse.pdf
 
 ```
 java -cp build/libs/ujpc.jar ujpc.example.<example-name>.Main

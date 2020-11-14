@@ -5,21 +5,20 @@ import java.util.List;
 public class Workflow {
     private final List<Statement> statements;
 
+    public Workflow(List<Statement> statements)
+        { this.statements = statements; }
+
     public String toString()
         { return String.format("Workflow(%s)", statements); }
 
-    public Workflow(List<Statement> statements) {
-        this.statements = statements;
-    }
-
     public static abstract class Statement {
+        private Statement() {}
 
         public static class Sequence extends Statement {
             private final List<String> tasks;
 
-            public Sequence(List<String> tasks) {
-                this.tasks = tasks;
-            }
+            public Sequence(List<String> tasks)
+                { this.tasks = tasks; }
 
             public String toString()
                 { return String.format("Sequence(%s)", tasks); }
@@ -38,9 +37,10 @@ public class Workflow {
                 this.elseStatement = elseStatement;
             }
 
-            public String toString()
-                { return String.format("Branch(%s, %s, %s)",
-                                       condition, ifStatement, elseStatement); }
+            public String toString() {
+                return String.format("Branch(%s, %s, %s)",
+                                     condition, ifStatement, elseStatement);
+            }
         }
 
         public static class Loop extends Statement {
@@ -60,13 +60,11 @@ public class Workflow {
         public static class Fork extends Statement {
             private final List<Statement> statements;
 
-            public Fork(List<Statement> statements) {
-                this.statements = statements;
-            }
+            public Fork(List<Statement> statements)
+                { this.statements = statements; }
 
             public String toString()
                 { return String.format("Fork(%s)", statements); }
         }
-
     }
 }
