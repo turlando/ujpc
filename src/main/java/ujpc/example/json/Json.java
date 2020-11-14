@@ -13,7 +13,7 @@ public abstract class Json {
     }
 
     public static class Boolean extends Json {
-        public final boolean value;
+        private final boolean value;
         public Boolean(boolean value) { this.value = value; }
         public boolean equals(Boolean that) { return this.value == that.value; }
         public boolean equals(java.lang.Object o)
@@ -24,7 +24,7 @@ public abstract class Json {
     }
 
     public static class Number extends Json {
-        public final double value;
+        private final double value;
         public Number(double value) { this.value = value; }
         public boolean equals(Number that) { return this.value == that.value; }
         public boolean equals(java.lang.Object o)
@@ -35,7 +35,7 @@ public abstract class Json {
     }
 
     public static class String extends Json {
-        public final java.lang.String value;
+        private final java.lang.String value;
         public String(java.lang.String value) { this.value = value; }
         public boolean equals(String that)
             { return this.value.equals(that.value); }
@@ -46,7 +46,7 @@ public abstract class Json {
     }
 
     public static class Array extends Json {
-        public final List<Json> value;
+        private final List<Json> value;
         public Array() { this.value = List.of(); }
         public Array(List<Json> value) { this.value = value; }
         public Array(Json... values) { this.value = List.of(values); }
@@ -59,7 +59,7 @@ public abstract class Json {
     }
 
     public static class Object extends Json {
-        public final Map<Json, Json> value;
+        private final Map<Json, Json> value;
         public Object() { this.value = Map.of(); }
         public Object(Map<Json, Json> value) { this.value = value; }
         public boolean isEmpty() { return value.isEmpty(); }
