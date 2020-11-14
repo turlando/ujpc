@@ -28,10 +28,7 @@ public class Main {
         try {
             Workflow result = new TextFile<>(PARSER, path).parse();
             System.out.println(result);
-        } catch (java.io.IOException e) {
-            System.err.println(e);
-            System.exit(1);
-        } catch (ParserException e) {
+        } catch (java.io.IOException | ParserException e) {
             System.err.println(e);
             System.exit(1);
         }

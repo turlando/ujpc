@@ -43,10 +43,7 @@ public class Main {
             try {
                 final Json result = file.parse();
                 System.out.println(result);
-            } catch (IOException e) {
-                System.err.println(e);
-                System.exit(1);
-            } catch (ParserException e) {
+            } catch (IOException | ParserException e) {
                 System.err.println(e);
                 System.exit(1);
             }
