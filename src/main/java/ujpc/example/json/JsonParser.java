@@ -27,7 +27,7 @@ public class JsonParser implements Parser<Text, Json> {
             new ArrayParser(),
             new ObjectParser());
 
-    public static class NullParser implements Parser<Text, Json> {
+    private static class NullParser implements Parser<Text, Json> {
         private Parser<Text, Json> parser
             = new Token("null").map(x -> new Json.Null());
 
@@ -39,7 +39,7 @@ public class JsonParser implements Parser<Text, Json> {
         public String toString() { return "null"; }
     }
 
-    public static class BooleanParser implements Parser<Text, Json> {
+    private static class BooleanParser implements Parser<Text, Json> {
         private Parser<Text, Json> parser
             = new Choice<Text, Json>(
                 new Token("true").map(x -> new Json.Boolean(true)),
@@ -53,7 +53,7 @@ public class JsonParser implements Parser<Text, Json> {
         public String toString() { return "boolean"; }
     }
 
-    public static class NumberParser implements Parser<Text, Json> {
+    private static class NumberParser implements Parser<Text, Json> {
         private Parser<Text, Json> parser
             = new Regex("(-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?)")
                   .map(x -> new Json.Number(Double.valueOf(first(x))));
