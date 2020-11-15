@@ -8,11 +8,12 @@ import static ujpc.util.Lists.append;
 import static ujpc.util.Lists.concat;
 import static ujpc.util.Lists.last;
 
-public class Text
-extends Input<String> {
+public class Text extends Input<String> {
     private final List<Line> lines;
     private final int lineOffset;
     private final int columnOffset;
+
+    public Text(String input) { this(input, 0, stringToLines(input), 0, 0); }
 
     private Text(String input, int offset,
                  List<Line> lines, int lineOffset, int columnOffset) {
@@ -21,8 +22,6 @@ extends Input<String> {
         this.lineOffset = lineOffset;
         this.columnOffset = columnOffset;
     }
-
-    public Text(String input) { this(input, 0, stringToLines(input), 0, 0); }
 
     public int line()   { return lineOffset + 1; }    // 1-based indexing for
     public int column() { return columnOffset + 1; }  // human-friendliness

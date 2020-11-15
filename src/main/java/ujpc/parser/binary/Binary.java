@@ -5,8 +5,8 @@ import ujpc.util.Bytes;
 
 public class Binary
 extends Input<byte[]> {
-    public Binary(byte[] input)             { super(input, 0); }
-    public Binary(byte[] input, int offset) { super(input, offset); }
+    public  Binary(byte[] input)             { super(input, 0); }
+    private Binary(byte[] input, int offset) { super(input, offset); }
 
     @Override public byte[] rest()
         { return Bytes.drop(input(), offset()); }

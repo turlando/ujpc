@@ -13,8 +13,8 @@ import static ujpc.util.Lists.append;
 public class Regex implements Parser<Text, List<String>> {
     private final Pattern target;
 
-    public Regex(String target)  { this.target = Pattern.compile(target); }
     public Regex(Pattern target) { this.target = target; }
+    public Regex(String target)  { this.target = Pattern.compile(target); }
 
     @Override
     public State<Text, List<String>> parse(Text in) {

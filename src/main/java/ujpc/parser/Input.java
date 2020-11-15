@@ -4,12 +4,12 @@ public abstract class Input<T> {
     private final T   input;
     private final int offset;
 
-    public Input(T input, int offset) {
+    protected Input(T input) { this(input, 0); }
+
+    protected Input(T input, int offset) {
         this.input  = input;
         this.offset = offset;
     }
-
-    public Input(T input) { this(input, 0); }
 
     public          T   input()  { return input; }
     public          int offset() { return offset; }
