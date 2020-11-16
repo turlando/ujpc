@@ -2,7 +2,6 @@ package ujpc.example.cbse2011;
 
 import java.io.IOException;
 import ujpc.parser.ParserException;
-import ujpc.parser.text.TextFile;
 
 public class Main {
     private static final String COMMAND
@@ -24,9 +23,10 @@ public class Main {
         }
 
         final String path = args[0];
+        final WorkflowFile file = new WorkflowFile(path);
 
         try {
-            Workflow result = new TextFile<>(PARSER, path).parse();
+            final Workflow result = file.parse();
             System.out.println(result);
         } catch (java.io.IOException | ParserException e) {
             System.err.println(e);
