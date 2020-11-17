@@ -6,7 +6,7 @@ import ujpc.parser.text.Text;
 import static ujpc.util.Lists.first;
 
 public class Alphanum implements Parser<Text, String> {
-    private Parser<Text, String> parser
+    private static final Parser<Text, String> parser
         = new Regex("([a-zA-Z0-9]+)").map(x -> first(x));
 
     @Override

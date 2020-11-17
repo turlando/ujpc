@@ -8,7 +8,7 @@ import static ujpc.util.Lists.first;
 import java.util.regex.Pattern;
 
 public class Natural implements Parser<Text, String> {
-    private Parser<Text, String> parser
+    private static final Parser<Text, String> parser
         = new Regex("([+-]?[0-9]+)").map(x -> first(x));
 
     @Override

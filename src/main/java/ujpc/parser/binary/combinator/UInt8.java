@@ -9,7 +9,7 @@ public class UInt8 implements Parser<Binary, Integer> {
     @Override
     public State<Binary, Integer> parse(Binary in) {
         return new State.Success<Binary, Integer>(
-        in.addOffset(1),
-        (int) in.take(1)[0]);
+            in.addOffset(1),
+            (int) in.take(1)[0]);
     }
 }

@@ -8,8 +8,8 @@ import static ujpc.util.Strings.getCommonPrefix;
 import static ujpc.util.Lists.first;
 
 public class Token implements Parser<Text, String> {
-    private String target;
-    private Parser<Text, String> parser;
+    private final String target;
+    private final Parser<Text, String> parser;
 
     public Token(String target) {
         this.target = target;

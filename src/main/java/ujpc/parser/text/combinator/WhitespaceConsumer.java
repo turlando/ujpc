@@ -7,7 +7,7 @@ import ujpc.parser.combinator.Sequence;
 import static ujpc.util.Lists.first;
 
 public class WhitespaceConsumer<ResultT> implements Parser<Text, ResultT> {
-    private Parser<Text, ResultT> parser;
+    private final Parser<Text, ResultT> parser;
 
     public WhitespaceConsumer(Parser<Text, ResultT> parser) {
         this.parser = parser;

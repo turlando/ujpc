@@ -7,8 +7,8 @@ import ujpc.parser.text.Text;
 import static ujpc.util.Lists.append;
 
 public class Separated<ResultT> implements Parser<Text, List<ResultT>> {
-    private Parser<Text, String> separatorParser;
-    private Parser<Text, ResultT> parser;
+    private final Parser<Text, String> separatorParser;
+    private final Parser<Text, ResultT> parser;
 
     public Separated(Parser<Text, String> separatorParser,
                      Parser<Text, ResultT> parser) {
