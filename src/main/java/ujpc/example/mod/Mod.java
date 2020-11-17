@@ -2,7 +2,7 @@ package ujpc.example.mod;
 
 import java.util.List;
 
-public class Mod {
+public final class Mod {
     public final String        title;
     public final List<Sample>  samples;
     public final int           length;
@@ -15,7 +15,7 @@ public class Mod {
                List<Pattern> patterns) {
         this.title         = title;
         this.samples       = samples;
-        this.length = length;
+        this.length        = length;
         this.patternsTable = patternsTable;
         this.type          = type;
         this.patterns      = patterns;
@@ -74,27 +74,20 @@ public class Mod {
     public static class Pattern {
         public final List<Row> rows;
 
-        public Pattern(List<Row> rows) {
-            this.rows = rows;
-        }
+        public Pattern(List<Row> rows) { this.rows = rows; }
 
-        public boolean equals(Pattern that) {
-            return this.rows.equals(that.rows);
-        }
-
+        public boolean equals(Pattern that)
+            { return this.rows.equals(that.rows); }
         public boolean equals(Object o)
             { return o instanceof Sample ? equals((Pattern) o) : false; }
 
         public static class Row {
             public final List<Note> notes;
 
-            public Row(List<Note> notes) {
-                this.notes = notes;
-            }
+            public Row(List<Note> notes) { this.notes = notes; }
 
             public boolean equals(Row that)
                 { return this.notes.equals(that.notes); }
-
             public boolean equals(Object o)
                 { return o instanceof Row ? equals((Row) o) : false; }
 
@@ -123,7 +116,6 @@ public class Mod {
                                          sample, period, effect);
                 }
             }
-
         }
     }
 }

@@ -2,7 +2,7 @@ package ujpc.example.cbse2011;
 
 import java.util.List;
 
-public class Workflow {
+public final class Workflow {
     private final List<Statement> statements;
 
     public Workflow(List<Statement> statements)
